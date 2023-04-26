@@ -14,8 +14,8 @@ function Login(){
                         <p className="text-sm font-medium">Don't have an account yet?</p>
                         <Link to="/signup" className="text-sm font-bold ml-1 underline">Sign Up!</Link>
                     </div>
-                    <input type="text" placeholder="Username" className="input"></input>
-                    <input type="password" placeholder="Password" className="input"></input>
+                    <input type="text" placeholder="Username" className="input1"></input>
+                    <input type="password" placeholder="Password" className="input1"></input>
                     <div className="flex justify-center w-full">
                         <button type="submit" className="rounded-full bg-zinc-300 shadow-sm w-36 h-11 mt-4">Submit</button>
                     </div>
