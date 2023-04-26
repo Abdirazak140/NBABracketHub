@@ -18,6 +18,7 @@ function Navbar(){
     return(
         <nav className= {navBackground ? "navbar active" : "navbar"}>
             <h1 className="ml-10 mt-4 text-2xl">Title Here</h1>
+            {/* <img src="../assets/SportBracketTracker"></img> */}
             <ul className = "flex flex-row mt-5 mr-10">
                 <li>
                     <Link to="/" className="link">Home</Link>
@@ -25,7 +26,7 @@ function Navbar(){
                 <li>
                     <Link to="/dashboard" className="link">Dashboard</Link>
                 </li>
-                <li className="flex justify-center items-center rounded-md w-24 mb-4 bg-white transition-all duration-300 hover:bg-blue hover:shadow-sm hover:shadow-blue">
+                <li className="flex justify-center items-center rounded-md w-24 h-7 mb-4 bg-white transition duration-150 ease-in-out hover:bg-blue-500 shadow-md hover:shadow-blue-200">
                     <Link to="/login" className="link">Login</Link>
                 </li>
             </ul>
