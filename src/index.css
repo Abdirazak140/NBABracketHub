@@ -7,3 +7,17 @@
   margin: 0px;
   box-sizing: border-box;
 }
+
+.link{
+  margin-left: 16px;
+  margin-right: 16px;
+  font-size: 18px;
+  color: red;
+  font-weight: bold;
+}
+
+.bracket-img{
+  background-image: url(assets/court.jpg);
+  width: 100%;
+  height: 100vh;
+}
