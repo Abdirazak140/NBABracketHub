@@ -8,6 +8,9 @@ module.exports = {
       colors: {
         'regal-blue': '#243c5a',
       },
+      spacing: {
+        '18': '0.625rem',
+      }
     },
   },
   plugins: [],

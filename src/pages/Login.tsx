@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Bracket from "../assets/bracket.png";
 
 function Login(){
     return(
@@ -21,8 +22,9 @@ function Login(){
                     </div>
                 </form>
                 <div className="border-2 border-black w-96 h-80 shadow-lg rounded-lg p-6 bg-zinc-800">
-                <div className="flex justify-center w-full">
+                <div className="flex flex-col items-center w-full">
                         <h2 className="font-bold text-3xl mb-4 text-white">Track Your Bracket Predictions Live</h2>
+                        <img src={Bracket} alt="bracket" className="w-60 h-60"></img>
                     </div>
                 </div>
             </div>
