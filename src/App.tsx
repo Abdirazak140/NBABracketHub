@@ -3,6 +3,9 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
+import { initializeApp } from 'firebase/app';
+
+const firebaseApp = initializeApp();
 
 function App() {
   return (
