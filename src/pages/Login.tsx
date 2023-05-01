@@ -1,8 +1,29 @@
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Bracket from "../assets/bracket.png";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { fireApp } from "../App";
 
 function Login(){
+
+    function UserLogin(){
+        const email_input = document.querySelector("#email-input") as HTMLInputElement;
+        const password_input = document.querySelector("#password-input") as HTMLInputElement;
+
+        if (email_input === null || password_input === null){
+            return;
+        }
+
+        const email: string = email_input.value;
+        const password: string = password_input.value;
+        
+        const auth = getAuth(fireApp);
+        signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+            const user = userCredential.user;
+            
+        })
+    }
+
     return(
         <div>
             <Navbar/>
@@ -15,10 +36,10 @@ function Login(){
                         <p className="text-sm font-medium">Don't have an account yet?</p>
                         <Link to="/signup" className="text-sm font-bold ml-1 underline">Sign Up!</Link>
                     </div>
-                    <input type="text" placeholder="Username" className="input1"></input>
-                    <input type="password" placeholder="Password" className="input1"></input>
+                    <input id="email-input" type="email" placeholder="Email" className="input1"></input>
+                    <input id="password-input" type="password" placeholder="Password" className="input1"></input> 
                     <div className="flex justify-center w-full">
-                        <button type="submit" className="rounded-full bg-zinc-300 shadow-sm w-36 h-11 mt-4">Submit</button>
+                        <button onClick={UserLogin} type="submit" className="rounded-full bg-zinc-300 shadow-sm w-36 h-11 mt-4">Submit</button>
                     </div>
                 </form>
                 <div className="border-2 border-black w-96 h-80 shadow-lg rounded-lg p-6 bg-zinc-800">

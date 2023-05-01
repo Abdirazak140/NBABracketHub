@@ -5,6 +5,7 @@ import { ReactComponent as SiteTitle } from "../assets/SportBracketPredictions.s
 function Navbar(){
     const [navBackground, setNavBackground] = useState(false);
     
+
     const changeNavBarStyle = () => {
         if (window.scrollY >= 10){
             setNavBackground(true);
@@ -29,6 +30,12 @@ function Navbar(){
                 <li className="flex justify-center items-center rounded-md w-24 h-7 mb-4 bg-blue-800 transition duration-150 ease-in-out hover:bg-blue-500 shadow-md hover:shadow-blue-200">
                     <Link to="/login" className="link">Login</Link>
                 </li>
+                <div className="inline">
+                    <button>Account</button>
+                    <div>
+                        
+                    </div>
+                </div>
             </ul>
         </nav>
     )
