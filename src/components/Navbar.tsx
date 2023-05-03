@@ -1,10 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as SiteTitle } from "../assets/SportBracketPredictions.svg";
+import { fireApp } from "../App"
+import { getAuth } from "firebase/auth";
 
 function Navbar(){
     const [navBackground, setNavBackground] = useState(false);
-    
+    const [user, setUser] = useState(false);
+
+    useEffect(() => {
+        const auth = getAuth(fireApp);
+        const user = auth.currentUser;
+        if (user){
+            setUser(true);
+        }
+        else{
+            setUser(false);
+        }
+    }, []);
 
     const changeNavBarStyle = () => {
         if (window.scrollY >= 10){
@@ -25,17 +38,22 @@ function Navbar(){
                     <Link to="/" className="link">Home</Link>
                 </li>
                 <li>
-                    <Link to="/dashboard" className="link">Dashboard</Link>
+                    {user ? (<Link to="/dashboard" className="link">Dashboard</Link>) : (<Link to="/login" className="link">Dashboard</Link>) }
                 </li>
+
+                {user ? (
+                <div className="dropdown">
+                    <button className="dropdown-btn">Account</button>
+                    <div className="dropdown-content">
+                        <button className="dropdown-content-btn">Log Out</button>
+                    </div>
+                </div>
+                ) : (                
                 <li className="flex justify-center items-center rounded-md w-24 h-7 mb-4 bg-blue-800 transition duration-150 ease-in-out hover:bg-blue-500 shadow-md hover:shadow-blue-200">
                     <Link to="/login" className="link">Login</Link>
                 </li>
-                <div className="inline">
-                    <button>Account</button>
-                    <div>
-                        
-                    </div>
-                </div>
+                )}
+            
             </ul>
         </nav>
     )

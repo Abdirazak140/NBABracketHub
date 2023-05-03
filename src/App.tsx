@@ -4,7 +4,6 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCU-njROKe-uM_yc03aUabAmAuomAP8Cv4",
@@ -17,7 +16,6 @@ const firebaseConfig = {
 };
 
 const fireApp = initializeApp(firebaseConfig);
-const analytics = getAnalytics(fireApp);
 
 function App() {
   return (
