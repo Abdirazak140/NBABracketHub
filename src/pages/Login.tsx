@@ -9,7 +9,8 @@ function Login(){
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
 
-    function UserLogin(){
+    function UserLogin(event: any){
+        event.preventDefault();
         const email_input = document.querySelector("#email-input") as HTMLInputElement;
         const password_input = document.querySelector("#password-input") as HTMLInputElement;
 
@@ -18,8 +19,10 @@ function Login(){
 
         const auth = getAuth(fireApp);
         signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+            console.log("Before");
             const user = userCredential.user;
             navigate("/dashboard");
+            console.log("After");
         })
         .catch((error) => {
             const errorMessage = error.message;

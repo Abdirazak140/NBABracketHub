@@ -1,12 +1,21 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as SiteTitle } from "../assets/SportBracketPredictions.svg";
 import { fireApp } from "../App"
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 
 function Navbar(){
     const [navBackground, setNavBackground] = useState(false);
     const [user, setUser] = useState(false);
+    const navigate = useNavigate();
+
+    function LogOut(){
+        const auth = getAuth();
+        signOut(auth).then(() => {
+            setUser(false);
+            navigate("/login");
+        })
+    }
 
     useEffect(() => {
         const auth = getAuth(fireApp);
@@ -17,7 +26,7 @@ function Navbar(){
         else{
             setUser(false);
         }
-    }, []);
+    },[]);
 
     const changeNavBarStyle = () => {
         if (window.scrollY >= 10){
@@ -45,7 +54,7 @@ function Navbar(){
                 <div className="dropdown">
                     <button className="dropdown-btn">Account</button>
                     <div className="dropdown-content">
-                        <button className="dropdown-content-btn">Log Out</button>
+                        <button onClick={LogOut} className="dropdown-content-btn">Log Out</button>
                     </div>
                 </div>
                 ) : (                

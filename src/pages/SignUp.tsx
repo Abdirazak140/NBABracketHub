@@ -7,7 +7,8 @@ function Signup(){
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
 
-    function createUser(){
+    function createUser(event: any){
+        event.preventDefault();
         const email_input = document.querySelector("#email-input") as HTMLInputElement;
         const password_input = document.querySelector("#password-input") as HTMLInputElement;
         const verify_input = document.querySelector("#verify-input") as HTMLInputElement;
@@ -23,8 +24,10 @@ function Signup(){
         else{
             const auth = getAuth(fireApp);
             createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-                const user = userCredential.user;           
+                console.log("Before");
+                const user = userCredential.user;         
                 navigate("/dashboard");
+                console.log("After");
             })
             .catch((error) => {
                 const errorMessage = error.message;
