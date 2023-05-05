@@ -19,10 +19,8 @@ function Login(){
 
         const auth = getAuth(fireApp);
         signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-            console.log("Before");
-            const user = userCredential.user;
+            // const user = userCredential.user;
             navigate("/dashboard");
-            console.log("After");
         })
         .catch((error) => {
             const errorMessage = error.message;
