@@ -4,10 +4,14 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
 import { initializeApp } from "firebase/app";
+import { getDatabase } from "firebase/database";
+import AccountInfo from "./pages/AccountInfo";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCU-njROKe-uM_yc03aUabAmAuomAP8Cv4",
   authDomain: "sportbracketpredictions.firebaseapp.com",
+  databaseURL: "https://sportbracketpredictions-default-rtdb.firebaseio.com/",
   projectId: "sportbracketpredictions",
   storageBucket: "sportbracketpredictions.appspot.com",
   messagingSenderId: "826690539160",
@@ -16,6 +20,7 @@ const firebaseConfig = {
 };
 
 const fireApp = initializeApp(firebaseConfig);
+const database = getDatabase(fireApp);
 
 function App() {
   return (
@@ -26,6 +31,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/signup" element={<Signup/>}/>
+          <Route path="/account-info" element={<AccountInfo/>}></Route>
         </Routes>
       </Router>
     </>
@@ -33,4 +39,4 @@ function App() {
 }
 
 export default App;
-export { fireApp };
+export { fireApp, database };

@@ -54,6 +54,7 @@ function Navbar(){
                 <div className="dropdown">
                     <button className="dropdown-btn">Account</button>
                     <div className="dropdown-content">
+                        <Link to="/account-info" className="dropdown-content-btn">INFO</Link>
                         <button onClick={LogOut} className="dropdown-content-btn">Log Out</button>
                     </div>
                 </div>

@@ -9,7 +9,7 @@ module.exports = {
         'regal-blue': '#243c5a',
       },
       spacing: {
-        '100': '28rem',
+        '100': '33rem',
       }
     },
   },
