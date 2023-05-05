@@ -20,7 +20,7 @@ function AccountInfo(){
         }).catch((error) => {
           console.error(error);
         });
-    })
+    },[name, email, reference, userId])
     
     return(
         <div className="flex justify-center items-center w-full h-screen bg-slate-600">
