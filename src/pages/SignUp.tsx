@@ -8,11 +8,12 @@ function Signup(){
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
 
-    function storeNewUserData(email: string, name: string, password: string, userId: string){
+    function storeNewUserData(email: string, name: string, userId: string){
         set(ref(database, 'users/' + userId), {
             name: name,
             email: email,
-          });
+            predictions: {}
+        });
     } 
 
     function createUser(event: any){
@@ -35,7 +36,7 @@ function Signup(){
             const auth = getAuth(fireApp);
             createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
                 const userId = userCredential.user.uid;
-                storeNewUserData(email, name, password, userId);
+                storeNewUserData(email, name, userId);
                 navigate("/dashboard");
             })
             .catch((error) => {
