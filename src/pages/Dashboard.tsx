@@ -7,6 +7,7 @@ import Prediction from "../components/predictionBox";
 import ReactDOM from "react-dom";
 import { useEffect } from "react";
 import axios from "axios";
+import cheerio from "cheerio";
 
 function Dashboard(){
     const auth = getAuth(fireApp);
@@ -18,7 +19,7 @@ function Dashboard(){
         const league: string = selectedLeague.value;
         const container = document.getElementById("dashboard");
 
-        retrieveLeagueData(league);
+        retrieveLeagueData();
 
         set(ref(database, `users/${userId}/predictions`),{
             [league]: null
@@ -29,25 +30,33 @@ function Dashboard(){
         container?.appendChild(newPrediction);
     }
 
-    async function retrieveLeagueData(league: string){
-        // if (league === ""){
+    function retrieveLeagueData(){
+        const espnUrl = 'http://www.espn.com/nba/bracket';
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        const newUrl = proxyUrl + espnUrl;
+       axios.get(newUrl).then(response => {
+            let teams: Array<string> = [];
+            const html = response.data;
+            const $ = cheerio.load(html);
+            const firstRound = $(".c1");
 
-        // }
-        const options = {
-            method: 'GET',
-            url: 'https://basketapi1.p.rapidapi.com/api/basketball/group/tournament/4618/season/22873/matches',
-            headers: {
-              'X-RapidAPI-Key': 'f25a3c0601msh66d2f137054c227p1a9429jsn9b16330dc6c6',
-              'X-RapidAPI-Host': 'basketapi1.p.rapidapi.com'
-            }
-          };
+            firstRound.each((_: any, dl: any) => {
+                $(dl).find("dt").each((_: any , dt: any) => {
+                    let text = $(dt).text().trim();
+                    const textArr = text.split("(");
+                    const team1_text = textArr[1].split(")");
+                    const team2_text = textArr[2].split(")");
+                    const team1 = team1_text[1].substring(1);
+                    const team2 = team2_text[1].substring(1);
+                    teams.push(team1);
+                    teams.push(team2);
+                })
+            })
+            console.log(teams);
         
-        try {
-            const response = await axios(options);
-            console.log(response.data);
-        } catch (error) {
-            console.error(error);
-        }
+        }).catch(error => {
+            console.log(error);
+        })
     }
 
     useEffect(() => {
