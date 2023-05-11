@@ -43,12 +43,17 @@ function Navbar(){
         <nav className= {navBackground ? "navbar active" : "navbar"}>
             <SiteTitle className="pb-3"/>
             <ul className = "flex flex-row mt-7 mr-10">
+                {!user ? (
                 <li>
                     <Link to="/" className="link">Home</Link>
                 </li>
+                ) : (null)} 
+
+                {user ? (
                 <li>
-                    {user ? (<Link to="/dashboard" className="link">Dashboard</Link>) : (<Link to="/login" className="link">Dashboard</Link>) }
+                    <Link to="/dashboard" className="link">Dashboard</Link>
                 </li>
+                ) : (null)}
 
                 {user ? (
                 <div className="dropdown">
@@ -58,12 +63,13 @@ function Navbar(){
                         <button onClick={LogOut} className="dropdown-content-btn">Log Out</button>
                     </div>
                 </div>
-                ) : (                
+                ) : (null)}
+
+                {!user ? (
                 <li className="flex justify-center items-center rounded-md w-24 h-7 mb-4 bg-blue-800 transition duration-150 ease-in-out hover:bg-blue-500 shadow-md hover:shadow-blue-200">
                     <Link to="/login" className="link">Login</Link>
                 </li>
-                )}
-            
+                ) : (null)}
             </ul>
         </nav>
     )
