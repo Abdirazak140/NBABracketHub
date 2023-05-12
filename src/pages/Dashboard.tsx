@@ -10,6 +10,8 @@ import axios from "axios";
 import cheerio from "cheerio";
 
 function Dashboard(){
+    const date = new Date();
+    const currentYear = date.getFullYear();
     const auth = getAuth(fireApp);
     const userId = auth.currentUser?.uid;
 
@@ -19,18 +21,14 @@ function Dashboard(){
         const league: string = selectedLeague.value;
         const container = document.getElementById("dashboard");
 
-        retrieveLeagueData();
-
-        set(ref(database, `users/${userId}/predictions`),{
-            [league]: null
-        })
+        retrieveLeagueData(league);
 
         const newPrediction = document.createElement("div");
         ReactDOM.render(<Prediction bracket={league}/>, newPrediction)
         container?.appendChild(newPrediction);
     }
 
-    function retrieveLeagueData(){
+    function retrieveLeagueData(league: string){
         const espnUrl = 'http://www.espn.com/nba/bracket';
         const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
         const newUrl = proxyUrl + espnUrl;
@@ -52,6 +50,14 @@ function Dashboard(){
                     teams.push(team2);
                 })
             })
+            let counter: number = 0;
+            for (let i: number = 1; i <= 8; i++){
+                set(ref(database, `users/${userId}/predictions/${league}/match_${i}`),{
+                    team_1: teams[counter],
+                    team_2: teams[counter+1],
+                })
+                counter+=2;
+            }
             console.log(teams);
         
         }).catch(error => {
@@ -60,10 +66,15 @@ function Dashboard(){
     }
 
     useEffect(() => {
-        // get(child(ref(database), `users/${userId}`)).then((snapshot) => {
-            
-        // }
-    }, [])
+        const container = document.getElementById("dashboard");
+        get(child(ref(database), `users/${userId}/predictions`)).then((snapshot) => {
+            snapshot.forEach((leagueDB) => {
+                const newPrediction = document.createElement("div");
+                ReactDOM.render(<Prediction bracket={leagueDB.key}/>, newPrediction)
+                container?.appendChild(newPrediction);
+            })
+        })
+    }, [userId])
     
     return(
         <div>
@@ -73,7 +84,7 @@ function Dashboard(){
                     <form className="flex flex-col items-center border-2 border-black w-96 bg-blue-300 shadow-lg rounded-lg p-6 h-72">
                         <h1>Select a Sports League:</h1>
                         <select name="sportsleague" className="mt-4">
-                            <option value="NBA Playoffs">Nba Playoffs</option>
+                            <option value={`NBA Playoffs ${currentYear}`}>Nba Playoffs</option>
                             {/* <option value="NFL Playoffs">NFL Playoffs</option>
                             <option value="Stanley Cup Playoffs">Stanley Cup Playoffs</option> */}
                         </select>
