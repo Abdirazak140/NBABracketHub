@@ -6,6 +6,7 @@ import Signup from "./pages/SignUp";
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 import AccountInfo from "./pages/AccountInfo";
+import MakePredictions from "./pages/MakePredictions";
 
 
 const firebaseConfig = {
@@ -32,6 +33,7 @@ function App() {
           <Route path="/login" element={<Login/>}/>
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/account-info" element={<AccountInfo/>}></Route>
+          <Route path="/make-bracket-predictions" element={<MakePredictions/>}></Route>
         </Routes>
       </Router>
     </>
