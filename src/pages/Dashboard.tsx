@@ -8,8 +8,10 @@ import ReactDOM from "react-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import cheerio from "cheerio";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard(){
+    const navigate = useNavigate();
     const date = new Date();
     const currentYear = date.getFullYear();
     const auth = getAuth(fireApp);
@@ -24,7 +26,7 @@ function Dashboard(){
         retrieveLeagueData(league);
 
         const newPrediction = document.createElement("div");
-        ReactDOM.render(<Prediction bracket={league}/>, newPrediction)
+        ReactDOM.render(<Prediction bracket={league} sendUser={SendUsertoPredictionsPanel}/>, newPrediction)
         container?.appendChild(newPrediction);
     }
 
@@ -65,12 +67,16 @@ function Dashboard(){
         })
     }
 
+    function SendUsertoPredictionsPanel(){ 
+        navigate("/make-bracket-predictions");
+    }
+
     useEffect(() => {
         const container = document.getElementById("dashboard");
         get(child(ref(database), `users/${userId}/predictions`)).then((snapshot) => {
             snapshot.forEach((leagueDB) => {
                 const newPrediction = document.createElement("div");
-                ReactDOM.render(<Prediction bracket={leagueDB.key}/>, newPrediction)
+                ReactDOM.render(<Prediction bracket={leagueDB.key} sendUser={SendUsertoPredictionsPanel}/>, newPrediction)
                 container?.appendChild(newPrediction);
             })
         })
