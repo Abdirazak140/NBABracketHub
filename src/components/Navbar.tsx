@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as SiteTitle } from "../assets/SportBracketPredictions.svg";
 import { fireApp } from "../App"
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 function Navbar(){
     const [navBackground, setNavBackground] = useState(false);
@@ -19,13 +19,15 @@ function Navbar(){
 
     useEffect(() => {
         const auth = getAuth(fireApp);
-        const user = auth.currentUser;
-        if (user){
-            setUser(true);
-        }
-        else{
-            setUser(false);
-        }
+        const isLogin = onAuthStateChanged(auth, (user) => {
+            if (user){
+                setUser(true);
+            }
+            else{
+                setUser(false);
+            }
+        })
+        return () => isLogin();
     },[]);
 
     const changeNavBarStyle = () => {
