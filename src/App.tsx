@@ -33,7 +33,7 @@ function App() {
           <Route path="/login" element={<Login/>}/>
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/account-info" element={<AccountInfo/>}></Route>
-          <Route path="/make-bracket-predictions" element={<MakePredictions/>}></Route>
+          <Route path="/make-bracket-predictions/:league/:userId" element={<MakePredictions/>}></Route>
         </Routes>
       </Router>
     </>

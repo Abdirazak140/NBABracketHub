@@ -67,8 +67,8 @@ function Dashboard(){
         })
     }
 
-    function SendUsertoPredictionsPanel(){ 
-        navigate("/make-bracket-predictions");
+    function SendUsertoPredictionsPanel(leagueClicked: any){ 
+        navigate(`/make-bracket-predictions/${leagueClicked}/${userId}`);
     }
 
     useEffect(() => {
@@ -76,7 +76,7 @@ function Dashboard(){
         get(child(ref(database), `users/${userId}/predictions`)).then((snapshot) => {
             snapshot.forEach((leagueDB) => {
                 const newPrediction = document.createElement("div");
-                ReactDOM.render(<Prediction bracket={leagueDB.key} sendUser={SendUsertoPredictionsPanel}/>, newPrediction)
+                ReactDOM.render(<Prediction bracket={leagueDB.key} sendUser={() =>SendUsertoPredictionsPanel(leagueDB.key)}/>, newPrediction)
                 container?.appendChild(newPrediction);
             })
         })
