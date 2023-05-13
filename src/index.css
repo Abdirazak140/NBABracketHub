@@ -155,3 +155,15 @@
 .dropdown-content-btn:hover{
   background-color: blue;
 }
+
+.box{
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-width: 4px 4px 4px 0;
+}
+
+.box-semi{
+  height: 120px;
+}
