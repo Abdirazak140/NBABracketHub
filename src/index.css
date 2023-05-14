@@ -163,6 +163,8 @@
   align-items: center;
   border-width: 2px 2px 2px 0;
   border-color: black;
+  display: flex;
+  flex-direction: column;
 }
 
 .box-semi{
