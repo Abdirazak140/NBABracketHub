@@ -54,7 +54,7 @@ function Dashboard(){
             })
             let counter: number = 0;
             for (let i: number = 1; i <= 8; i++){
-                set(ref(database, `users/${userId}/predictions/${league}/match_${i}`),{
+                set(ref(database, `users/${userId}/predictions/${league}/r1/match_${i}`),{
                     team_1: teams[counter],
                     team_2: teams[counter+1],
                 })
@@ -76,11 +76,12 @@ function Dashboard(){
         get(child(ref(database), `users/${userId}/predictions`)).then((snapshot) => {
             snapshot.forEach((leagueDB) => {
                 const newPrediction = document.createElement("div");
-                ReactDOM.render(<Prediction bracket={leagueDB.key} sendUser={() =>SendUsertoPredictionsPanel(leagueDB.key)}/>, newPrediction)
+                ReactDOM.render(<Prediction bracket={leagueDB.key} sendUser={() => SendUsertoPredictionsPanel(leagueDB.key)}/>, newPrediction)
                 container?.appendChild(newPrediction);
+                console.log(leagueDB.key)
             })
         })
-    }, [userId])
+    },)
     
     return(
         <div>
