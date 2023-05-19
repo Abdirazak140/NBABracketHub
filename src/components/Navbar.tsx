@@ -68,7 +68,7 @@ function Navbar(){
                 ) : (null)}
 
                 {!user ? (
-                <li className="flex justify-center items-center rounded-md w-24 h-7 mb-4 bg-blue-800 transition duration-150 ease-in-out hover:bg-blue-500 shadow-md hover:shadow-blue-200">
+                <li className="flex justify-center items-center rounded-md w-24 h-7 mb-4 bg-federal transition duration-150 ease-in-out hover:bg-zaffre shadow-md hover:shadow-zaffre">
                     <Link to="/login" className="link">Login</Link>
                 </li>
                 ) : (null)}

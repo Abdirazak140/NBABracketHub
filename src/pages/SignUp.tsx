@@ -41,14 +41,14 @@ function Signup(){
             })
             .catch((error) => {
                 const errorMessage = error.message;
-                setErrorMessage(errorMessage);
+                setErrorMessage(errorMessage.substring(9));
             });
         }
     }
 
     return(
         <div>
-            <div className="flex justify-center items-center w-full h-screen bg-slate-600">
+            <div className="flex justify-center items-center w-full h-screen bg-federal">
                 <form className="border-2 border-grey-500 w-80 bg-black shadow-lg rounded-lg p-6 h-100">
                     <div className="flex flex-row justify-center w-full">
                         <h2 className="font-bold text-3xl mb-4 text-white">Signup</h2>
