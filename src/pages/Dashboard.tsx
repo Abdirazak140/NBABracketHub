@@ -81,12 +81,12 @@ function Dashboard(){
                 console.log(leagueDB.key)
             })
         })
-    },)
+    },[userId])
     
     return(
         <div>
             <Navbar/>
-            <div className="w-full h-20 bg-slate-300 flex flex-row justify-center fixed top-20">
+            <div className="w-full h-20 bg-white flex flex-row justify-center fixed top-20">
                 <Popup trigger={<button className="dashboard-btn text-green-500 border-green-500 border-2">Create Prediction</button>}>
                     <form className="flex flex-col items-center border-2 border-black w-96 bg-blue-300 shadow-lg rounded-lg p-6 h-72">
                         <h1>Select a Sports League:</h1>

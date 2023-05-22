@@ -43,7 +43,7 @@ function Navbar(){
     
     return(
         <nav className= {navBackground ? "navbar active" : "navbar"}>
-            <SiteTitle className="pb-3"/>
+            {!user ? (<SiteTitle className="pb-3"/>) : (null)}    
             <ul className = "flex flex-row mt-7 mr-10">
                 {!user ? (
                 <li>
@@ -52,16 +52,10 @@ function Navbar(){
                 ) : (null)} 
 
                 {user ? (
-                <li>
-                    <Link to="/dashboard" className="link">Dashboard</Link>
-                </li>
-                ) : (null)}
-
-                {user ? (
                 <div className="dropdown">
                     <button className="dropdown-btn">Account</button>
                     <div className="dropdown-content">
-                        <Link to="/account-info" className="dropdown-content-btn">INFO</Link>
+                        <Link to="/account-info" className="dropdown-content-btn">Settings</Link>
                         <button onClick={LogOut} className="dropdown-content-btn">Log Out</button>
                     </div>
                 </div>

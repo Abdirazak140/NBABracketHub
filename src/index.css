@@ -121,11 +121,11 @@
 
 .dropdown-btn{
   font-size: 18px;
-  color: rgb(201, 234, 245);
+  color: #DFF3E4;
   font-weight: bold;
   text-align: center;
   height: 27px;
-  background-color: black;
+  background-color: #3423A6;
   width: 80px;
 }
 
@@ -143,17 +143,16 @@
 
 .dropdown-content-btn{
   font-size: 16px;
-  color: rgb(201, 234, 245);
+  color: #DFF3E4;
   font-weight: bold;
   text-align: center;
-  color: rgb(201, 234, 245);
   width: 80px;
   display: block;
-  background-color: black;
+  background-color: #3423A6;
 }
 
 .dropdown-content-btn:hover{
-  background-color: blue;
+  background-color: #171738;
 }
 
 .box{
