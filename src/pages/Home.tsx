@@ -1,6 +1,23 @@
+import { useEffect } from "react";
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { fireApp } from "../App";
+
 
 function Home(){
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const auth = getAuth(fireApp);
+        const isLogin = onAuthStateChanged(auth, (user) => {
+            if (user){
+                navigate("/dashboard");
+            }
+        })
+        return () => isLogin();
+    },[]);
+
     return(
         <div>
             <Navbar/>
