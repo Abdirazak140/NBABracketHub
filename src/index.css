@@ -22,17 +22,6 @@
   height: 100vh;
 }
 
-.tournament-img{
-  background-image: url(assets/bracket.jpg);
-  width: 100%;
-  height: 100vh;
-}
-
-.concrete-img{
-  background-image: url(assets/concrete.jpg);
-  width: 100%;
-  height: 100vh;
-}
 
 .navbar{
   width: 100%;

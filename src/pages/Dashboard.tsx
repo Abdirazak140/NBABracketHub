@@ -34,12 +34,13 @@ function Dashboard(){
         const espnUrl = 'http://www.espn.com/nba/bracket';
         const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
         const newUrl = proxyUrl + espnUrl;
-       axios.get(newUrl).then(response => {
+        axios.get(newUrl).then(response => {
             let teams: Array<string> = [];
             const html = response.data;
             const $ = cheerio.load(html);
-            const firstRound = $(".c1");
 
+            //first round
+            const firstRound = $(".c1");
             firstRound.each((_: any, dl: any) => {
                 $(dl).find("dt").each((_: any , dt: any) => {
                     let text = $(dt).text().trim();
@@ -60,10 +61,101 @@ function Dashboard(){
                 })
                 counter+=2;
             }
-            console.log(teams);
-        
-        }).catch(error => {
-            console.log(error);
+
+            //second round
+            teams = [];
+            const secondRound = $(".c2");
+            secondRound.each((_: any, dl: any) => {
+                $(dl).find("dt").each((_: any , dt: any) => {
+                    let numOfTeams = $(dt).find("a");
+                    if (numOfTeams.length === 1){
+                        let text = $(numOfTeams).text().trim();
+                        teams.push(text);
+                        teams.push("TBA");
+                    }
+                    else if (numOfTeams.length === 0){
+                        teams.push("TBA", "TBA");
+                    }
+                    else{
+                        $(dt).find("a").each((_: any, a: any) => {
+                            let text = $(a).text().trim();
+                            teams.push(text);
+                        })
+                    }
+                })
+            })
+            counter = 0;
+            for (let i: number = 1; i <= 4; i++){
+                set(ref(database, `users/${userId}/predictions/${league}/r2/match_${i}`),{
+                    team_1: teams[counter],
+                    team_2: teams[counter+1],
+                })
+                counter+=2;
+            }
+
+
+            //third round
+            teams = [];
+            const thirdRound = $(".c3");
+            thirdRound.each((_: any, dl: any) => {
+                $(dl).find("dt").each((_: any , dt: any) => {
+                    let numOfTeams = $(dt).find("a");
+                    if (numOfTeams.length === 1){
+                        let text = $(numOfTeams).text().trim();
+                        teams.push(text);
+                        teams.push("TBA");
+                    }
+                    else if (numOfTeams.length === 0){
+                        teams.push("TBA", "TBA");
+                    }
+                    else{
+                        $(dt).find("a").each((_: any, a: any) => {
+                            let text = $(a).text().trim();
+                            teams.push(text);
+                        })
+                    }
+                })
+            })
+            counter = 0;
+            for (let i: number = 1; i <= 2; i++){
+                set(ref(database, `users/${userId}/predictions/${league}/r3/match_${i}`),{
+                    team_1: teams[counter],
+                    team_2: teams[counter+1],
+                })
+                counter+=2;
+            }
+
+            
+            //final round
+            teams = [];
+            const finalRound = $(".c4");
+            finalRound.each((_: any, dl: any) => {
+                $(dl).find("dt").each((_: any , dt: any) => {
+                    let numOfTeams = $(dt).find("a");
+                    if (numOfTeams.length === 1){
+                        let text = $(numOfTeams).text().trim();
+                        teams.push(text);
+                        teams.push("TBA");
+                    }
+                    else if (numOfTeams.length === 0){
+                        teams.push("TBA", "TBA");
+                    }
+                    else{
+                        $(dt).find("a").each((_: any, a: any) => {
+                            let text = $(a).text().trim();
+                            teams.push(text);
+                        })
+                    }
+                })
+            })
+            counter = 0;
+            for (let i: number = 1; i <= 1; i++){
+                set(ref(database, `users/${userId}/predictions/${league}/r4/match_${i}`),{
+                    team_1: teams[counter],
+                    team_2: teams[counter+1],
+                })
+                counter+=2;
+            }
         })
     }
 
@@ -78,7 +170,6 @@ function Dashboard(){
                 const newPrediction = document.createElement("div");
                 ReactDOM.render(<Prediction bracket={leagueDB.key} sendUser={() => SendUsertoPredictionsPanel(leagueDB.key)}/>, newPrediction)
                 container?.appendChild(newPrediction);
-                console.log(leagueDB.key)
             })
         })
     },[userId])
