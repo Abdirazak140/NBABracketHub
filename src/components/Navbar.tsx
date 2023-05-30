@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ReactComponent as SiteTitle } from "../assets/SportBracketPredictions.svg";
+import { ReactComponent as SiteTitle } from "../assets/NBABracketHub (1).svg";
 import { fireApp } from "../App"
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
@@ -43,7 +43,7 @@ function Navbar(){
     
     return(
         <nav className= {navBackground ? "navbar active" : "navbar"}>
-            {!user ? (<SiteTitle className="pb-3"/>) : (null)}    
+            {!user ? (<SiteTitle className="mt-2"/>) : (null)}    
             <ul className = "flex flex-row mt-7 mr-10">
                 {!user ? (
                 <li>
