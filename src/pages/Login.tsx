@@ -32,6 +32,7 @@ function Login(){
     }
 
     function GoogleLogin(event: any){
+        event.preventDefault();
         const auth = getAuth(fireApp);
         signInWithPopup(auth, provider).then((result) => {
             const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -64,12 +65,12 @@ function Login(){
                 </form>
                 <div className="border-2 border-black w-96 h-96 shadow-lg rounded-lg p-6 bg-zinc-800">
                     <div className="flex flex-col items-start w-full">
-                        <h2 className="font-bold text-3xl mb-4 text-white">Track Your Bracket Predictions Live</h2>
+                        <h2 className="font-bold text-3xl mb-4 text-white">Sign In Using</h2>
                         <button onClick={GoogleLogin} className="bg-white text-black font-bold py-2 px-2 rounded inline-flex items-center">
                             <IconContext.Provider value={{ size: "30px"}}>
                                 <FcGoogle/>
                             </IconContext.Provider>
-                            <span className="ml-2">Continue with Google</span>
+                            <span className="ml-2 px-5">Google</span>
                         </button>
                     </div>
                 </div>
