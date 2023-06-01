@@ -65,16 +65,12 @@
   margin-bottom: 10px;
   border-radius: 16px;
   background: #e8e8e8;
-  box-shadow: 20px 20px 60px #c5c5c500,
-     -20px -20px 60px #ffffff44;
   transition: 0.3s;
  }
  
 .input2:focus {
   outline-color: #e8e8e8;
   background: #e8e8e8;
-  box-shadow: inset 20px 20px 60px #c5c5c5,
-     inset -20px -20px 60px #ffffff;
   transition: 0.3s;
  }
 

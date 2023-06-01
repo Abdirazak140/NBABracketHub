@@ -48,32 +48,32 @@ function Login(){
         <div>
             <Navbar/>
             <div className="flex justify-center items-center w-full h-screen bg-glucose">
-                <form className="border-2 w-80 bg-white shadow-lg rounded-lg p-6 h-96">
+                <form className="border-2 w-96 bg-honeydue-shade shadow-lg rounded-lg p-6 h-login-h">
                     <div className="flex justify-center w-full">
                         <h2 className="font-bold text-3xl mb-4">Login</h2>
                     </div>
-                    <div className="flex justify-start w-full">
-                        <p className="text-sm font-medium">Don't have an account yet?</p>
-                        <Link to="/signup" className="text-sm font-bold ml-1 underline">Sign Up!</Link>
+                    <div className="flex flex-col justify-center">
+                        <input id="email-input" type="email" placeholder="Email" className="input1"></input>
+                        <input id="password-input" type="password" placeholder="Password" className="input1"></input>
+                        <p className="text-red-500 font-bold">{errorMessage}</p> 
                     </div>
-                    <input id="email-input" type="email" placeholder="Email" className="input1"></input>
-                    <input id="password-input" type="password" placeholder="Password" className="input1"></input>
-                    <p className="text-red-500 font-bold">{errorMessage}</p> 
                     <div className="flex justify-center w-full">
                         <button onClick={UserLogin} type="submit" className="rounded-full bg-zinc-300 shadow-sm w-36 h-11 mt-4">Submit</button>
                     </div>
-                </form>
-                <div className="border-2 border-black w-96 h-96 shadow-lg rounded-lg p-6 bg-zinc-800">
-                    <div className="flex flex-col items-start w-full">
-                        <h2 className="font-bold text-3xl mb-4 text-white">Sign In Using</h2>
-                        <button onClick={GoogleLogin} className="bg-white text-black font-bold py-2 px-2 rounded inline-flex items-center">
-                            <IconContext.Provider value={{ size: "30px"}}>
-                                <FcGoogle/>
-                            </IconContext.Provider>
-                            <span className="ml-2 px-5">Google</span>
+                    <p className="text-sm font-medium text-center mt-5">-Or sign in using-</p>
+                    <div className="flex justify-center w-full mt-5">
+                        <button onClick={GoogleLogin} className="bg-white border-4 text-black font-bold py-2 px-2 rounded inline-flex items-center hover:bg-honeydue-shade">
+                                <IconContext.Provider value={{ size: "30px"}}>
+                                    <FcGoogle/>
+                                </IconContext.Provider>
+                                <span className="ml-2 px-5">Google</span>
                         </button>
                     </div>
-                </div>
+                    <div className="flex justify-start w-full mt-5">
+                        <p className="text-sm font-bold">Don't have an account yet?</p>
+                        <Link to="/signup" className="text-sm font-bold ml-1 underline">Sign Up!</Link>
+                    </div>
+                </form>
             </div>
         </div>
     )

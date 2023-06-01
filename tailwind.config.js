@@ -11,6 +11,7 @@ module.exports = {
         'federal': '#2E1760',
         'zaffre': '#3423A6',
         'glucose': '#7180B9',
+        'honeydue-shade': '#fcfefc',
         'honeydue': '#DFF3E4',
         'honeydue-transparent': 'rgba(240, 230, 140, 0.3)',
         'glucose-transparent': 'rgba(113, 128, 185, 0.2)'
@@ -23,6 +24,7 @@ module.exports = {
         '70': '280px',
         'final': '208px',
         'h2': '500px',
+        'login-h': '500px'
       },
       borderRadius: {
         'home': '100px'
