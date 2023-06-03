@@ -1,11 +1,7 @@
-import Navbar from "../components/Navbar";
-import Popup from 'reactjs-popup';
 import { child, get, ref, set } from "firebase/database";
 import { database, fireApp } from "../App";
 import { getAuth } from "firebase/auth";
-import Prediction from "../components/predictionBox";
-import ReactDOM from "react-dom";
-import { useEffect } from "react";
+import { ReactComponent as SiteTitle } from "../assets/NBABracketHub (1).svg";
 import axios from "axios";
 import cheerio from "cheerio";
 import { useNavigate } from "react-router-dom";
@@ -16,19 +12,6 @@ function Dashboard(){
     const currentYear = date.getFullYear();
     const auth = getAuth(fireApp);
     const userId = auth.currentUser?.uid;
-
-    function createPrediction(event: any){
-        event.preventDefault();
-        const selectedLeague = document.querySelector("select[name='sportsleague']") as HTMLSelectElement;
-        const league: string = selectedLeague.value;
-        const container = document.getElementById("dashboard");
-
-        retrieveLeagueData(league);
-
-        const newPrediction = document.createElement("div");
-        ReactDOM.render(<Prediction bracket={league} sendUser={SendUsertoPredictionsPanel}/>, newPrediction)
-        container?.appendChild(newPrediction);
-    }
 
     function retrieveLeagueData(league: string){
         const espnUrl = 'http://www.espn.com/nba/bracket';
@@ -163,36 +146,38 @@ function Dashboard(){
         navigate(`/make-bracket-predictions/${leagueClicked}/${userId}`);
     }
 
-    useEffect(() => {
-        const container = document.getElementById("dashboard");
-        get(child(ref(database), `users/${userId}/predictions`)).then((snapshot) => {
-            snapshot.forEach((leagueDB) => {
-                const newPrediction = document.createElement("div");
-                ReactDOM.render(<Prediction bracket={leagueDB.key} sendUser={() => SendUsertoPredictionsPanel(leagueDB.key)}/>, newPrediction)
-                container?.appendChild(newPrediction);
-            })
-        })
-    },[userId])
-    
     return(
-        <div>
-            <Navbar/>
-            <div className="w-full h-20 bg-white flex flex-row justify-center fixed top-20">
-                <Popup trigger={<button className="dashboard-btn text-green-500 border-green-500 border-2">Create Prediction</button>}>
-                    <form className="flex flex-col items-center border-2 border-black w-96 bg-blue-300 shadow-lg rounded-lg p-6 h-72">
-                        <h1>Select a Sports League:</h1>
-                        <select name="sportsleague" className="mt-4">
-                            <option value={`NBA Playoffs ${currentYear}`}>Nba Playoffs</option>
-                            {/* <option value="NFL Playoffs">NFL Playoffs</option>
-                            <option value="Stanley Cup Playoffs">Stanley Cup Playoffs</option> */}
-                        </select>
-                        <button onClick={createPrediction} type="submit" className="rounded-full bg-zinc-300 shadow-sm w-36 h-11 mt-11">Create</button>
-                    </form>
-                </Popup>
-                <button className="dashboard-btn text-red-500 border-red-500 border-2">Delete Prediction</button>
+        <div className="flex h-screen bg-gray-100">
+            <div className="bg-black w-1/4 flex flex-col justify-between items-center text-white">
+                <SiteTitle/>
             </div>
-            <div id="dashboard" className="w-full h-screen bg-slate-200 flex flex-wrap pt-40"></div>
+
+            <div id="dashboard" className="w-3/4 h-full flex flex-col bg-white p-8 overflow-auto">
+                <h1 className="text-4xl font-bold">Dashboard</h1>
+                <div className="flex justify-between">
+                    <div className="flex flex-col justify-center items-center w-96 h-64 text-lg text-black bg-white border-black rounded-lg m-3 border-2 shadow-2xl hover:shadow-sm">
+                        <p>{`NBA Playoff ${currentYear}`}</p>
+                    </div>
+
+                    <div className="flex flex-col justify-center items-center w-60 h-64 text-lg text-black bg-white border-black rounded-lg m-3 border-2 shadow-2xl hover:shadow-sm">
+                        <p>Live Game</p>
+                        {/* Live game details go here */}
+                    </div>
+                </div>
+                <div className="flex justify-evenly">
+                    <div className="flex flex-col justify-center items-center w-60 h-36 text-lg text-black bg-white border-black rounded-lg m-3 border-2 shadow-2xl hover:shadow-sm">
+                        <p>Western Conference Leaderboard</p>
+                        {/* Western conference leaderboard details go here */}
+                    </div>
+
+                    <div className="flex flex-col justify-center items-center w-60 h-36 text-lg text-black bg-white border-black rounded-lg m-3 border-2 shadow-2xl hover:shadow-sm">
+                        <p>Eastern Conference Leaderboard</p>
+                        {/* Eastern conference leaderboard details go here */}
+                    </div>
+                </div>
+            </div>
         </div>
+
     )
 }
 
