@@ -2,20 +2,11 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as SiteTitle } from "../assets/NBABracketHub (1).svg";
 import { fireApp } from "../App"
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 function Navbar(){
     const [navBackground, setNavBackground] = useState(false);
     const [user, setUser] = useState(false);
-    const navigate = useNavigate();
-
-    function LogOut(){
-        const auth = getAuth();
-        signOut(auth).then(() => {
-            setUser(false);
-            navigate("/login");
-        })
-    }
 
     useEffect(() => {
         const auth = getAuth(fireApp);
@@ -50,16 +41,6 @@ function Navbar(){
                     <Link to="/" className="link">Home</Link>
                 </li>
                 ) : (null)} 
-
-                {user ? (
-                <div className="dropdown">
-                    <button className="dropdown-btn">Account</button>
-                    <div className="dropdown-content">
-                        <Link to="/account-info" className="dropdown-content-btn">Settings</Link>
-                        <button onClick={LogOut} className="dropdown-content-btn">Log Out</button>
-                    </div>
-                </div>
-                ) : (null)}
 
                 {!user ? (
                 <li className="flex justify-center items-center rounded-md w-24 h-7 mb-4 bg-federal transition duration-150 ease-in-out hover:bg-zaffre shadow-md hover:shadow-zaffre">

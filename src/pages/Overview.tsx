@@ -1,12 +1,13 @@
-import { child, get, ref, set } from "firebase/database";
+import { ref, set } from "firebase/database";
 import { database, fireApp } from "../App";
 import { getAuth } from "firebase/auth";
-import { ReactComponent as SiteTitle } from "../assets/NBABracketHub (1).svg";
+import Playoffs from "../assets/pngaaa.com-405120.png"
 import axios from "axios";
 import cheerio from "cheerio";
 import { useNavigate } from "react-router-dom";
+import Dashbar from "../components/Dashbar";
 
-function Dashboard(){
+function Overview(){
     const navigate = useNavigate();
     const date = new Date();
     const currentYear = date.getFullYear();
@@ -141,6 +142,36 @@ function Dashboard(){
             }
         })
     }
+    
+    async function fetchStandings(){
+        const options = {
+        method: 'GET',
+        url: 'https://api-nba-v1.p.rapidapi.com/standings',
+        params: {
+            league: 'standard',
+            season: '2022',
+            conference: 'east'
+        },
+        headers: {
+            'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
+            'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com'
+        }
+        };
+
+        try {
+            const response = await axios.request(options);
+            console.log(response.data);
+            sortTeams(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    function sortTeams(data: any){
+        let easternConference = data.map
+    }
+
+    fetchStandings();
 
     function SendUsertoPredictionsPanel(leagueClicked: any){ 
         navigate(`/make-bracket-predictions/${leagueClicked}/${userId}`);
@@ -148,31 +179,40 @@ function Dashboard(){
 
     return(
         <div className="flex h-screen bg-gray-100">
-            <div className="bg-black w-1/4 flex flex-col justify-between items-center text-white">
-                <SiteTitle/>
-            </div>
+            <Dashbar/>
 
-            <div id="dashboard" className="w-3/4 h-full flex flex-col bg-white p-8 overflow-auto">
+            <div id="dashboard" className="w-3/4 h-full flex flex-col justify-between bg-white p-8 overflow-auto">
                 <h1 className="text-4xl font-bold">Dashboard</h1>
                 <div className="flex justify-between">
-                    <div className="flex flex-col justify-center items-center w-96 h-64 text-lg text-black bg-white border-black rounded-lg m-3 border-2 shadow-2xl hover:shadow-sm">
-                        <p>{`NBA Playoff ${currentYear}`}</p>
+                    <div className="playoffs-btn flex flex-col justify-center items-center w-96 h-64 text-lg text-black bg-white border-black rounded-lg ml-3 border-2 shadow-2xl hover:shadow-sm">
+                        <p>{`NBA Playoffs ${currentYear} Bracket Predictions`}</p>
                     </div>
 
-                    <div className="flex flex-col justify-center items-center w-60 h-64 text-lg text-black bg-white border-black rounded-lg m-3 border-2 shadow-2xl hover:shadow-sm">
+                    <div className="flex flex-col justify-center items-center w-100 h-64 text-lg text-black bg-white border-black rounded-lg mr-3 border-2 shadow-2xl hover:shadow-sm">
                         <p>Live Game</p>
                         {/* Live game details go here */}
                     </div>
                 </div>
                 <div className="flex justify-evenly">
-                    <div className="flex flex-col justify-center items-center w-60 h-36 text-lg text-black bg-white border-black rounded-lg m-3 border-2 shadow-2xl hover:shadow-sm">
-                        <p>Western Conference Leaderboard</p>
-                        {/* Western conference leaderboard details go here */}
+                    <div className="flex flex-col justify-center items-center w-full h-60 text-lg text-black bg-white border-black rounded-lg m-3 border-2 shadow-2xl hover:shadow-sm overflow-auto">
+                        <p className="font-bold text-xl mb-4">Western Conference Leaderboard</p>
+                        {/* {data.map((item, index) => (
+                            <div key={index} className="flex justify-between w-full px-4 py-2">
+                                <span className="text-left">{item.teamName}</span>
+                                <span className="text-right">{item.score}</span>
+                            </div>
+                        ))} */}
                     </div>
 
-                    <div className="flex flex-col justify-center items-center w-60 h-36 text-lg text-black bg-white border-black rounded-lg m-3 border-2 shadow-2xl hover:shadow-sm">
-                        <p>Eastern Conference Leaderboard</p>
-                        {/* Eastern conference leaderboard details go here */}
+
+                    <div className="flex flex-col justify-center items-center w-full h-60 text-lg text-black bg-white border-black rounded-lg m-3 border-2 shadow-2xl hover:shadow-sm overflow-auto">
+                        <p className="font-bold text-xl mb-4">Eastern Conference Leaderboard</p>
+                        {/* {data.map((item, index) => (
+                            <div key={index} className="flex justify-between w-full px-4 py-2">
+                                <span className="text-left">{item.teamName}</span>
+                                <span className="text-right">{item.score}</span>
+                            </div>
+                        ))} */}
                     </div>
                 </div>
             </div>
@@ -181,4 +221,4 @@ function Dashboard(){
     )
 }
 
-export default Dashboard;
+export default Overview;

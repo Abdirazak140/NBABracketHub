@@ -17,14 +17,14 @@ module.exports = {
         'glucose-transparent': 'rgba(113, 128, 185, 0.2)'
       },
       spacing: {
-        '100': '33rem',
         '13': '45px',
         '26': '80px',
         '37': '145px',
         '70': '280px',
         'final': '208px',
         'h2': '500px',
-        'login-h': '500px'
+        'login-h': '500px',
+        '100': '450px'
       },
       borderRadius: {
         'home': '100px'
