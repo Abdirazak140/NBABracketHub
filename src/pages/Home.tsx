@@ -12,7 +12,7 @@ function Home(){
         const auth = getAuth(fireApp);
         const isLogin = onAuthStateChanged(auth, (user) => {
             if (user){
-                navigate("/dashboard");
+                navigate("/dashboard/Overview");
             }
         })
         return () => isLogin();

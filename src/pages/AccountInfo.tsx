@@ -34,7 +34,7 @@ function AccountInfo(){
                     <p className="font-bold text-base text-white">Email:</p>
                     <p className="font-normal text-base text-white ml-3">{email}</p>
                 </div>
-                <Link to="/dashboard" className="text-sm font-bold underline text-white mt-4 w-16">Go Back</Link>
+                <Link to="/dashboard/Overview" className="text-sm font-bold underline text-white mt-4 w-16">Go Back</Link>
             </div>
         </div>
     )

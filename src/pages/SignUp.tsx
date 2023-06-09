@@ -37,7 +37,7 @@ function Signup(){
             createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
                 const userId = userCredential.user.uid;
                 storeNewUserData(email, name, userId);
-                navigate("/dashboard");
+                navigate("/dashboard/Overview");
             })
             .catch((error) => {
                 const errorMessage = error.message;

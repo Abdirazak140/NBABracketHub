@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 import AccountInfo from "./pages/AccountInfo";
 import MakePredictions from "./pages/MakePredictions";
+import Overview from "./pages/Overview";
 
 
 const firebaseConfig = {
@@ -29,7 +29,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home/>}/>
-          <Route path="/dashboard" element={<Dashboard/>}/>
+          <Route path="/dashboard/Overview" element={<Overview/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/account-info" element={<AccountInfo/>}></Route>

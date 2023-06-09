@@ -37,7 +37,7 @@ function Login(){
         signInWithPopup(auth, provider).then((result) => {
             const credential = GoogleAuthProvider.credentialFromResult(result);
             const token = credential?.accessToken;
-            navigate("/dashboard");
+            navigate("/dashboard/Overview");
         }).catch((error) => {
             const errorMessage = error.message;
             setErrorMessage(errorMessage.substring(9));
