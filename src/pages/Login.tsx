@@ -58,19 +58,19 @@ function Login(){
                         <p className="text-red-500 font-bold">{errorMessage}</p> 
                     </div>
                     <div className="flex justify-center w-full">
-                        <button onClick={UserLogin} type="submit" className="rounded-full bg-zinc-300 shadow-sm w-36 h-11 mt-4">Submit</button>
+                        <button onClick={UserLogin} type="submit" className="rounded-full bg-glucose font-semibold shadow-sm w-36 h-11 mt-4">Submit</button>
                     </div>
                     <p className="text-sm font-medium text-center mt-5">-Or sign in using-</p>
                     <div className="flex justify-center w-full mt-5">
-                        <button onClick={GoogleLogin} className="bg-white border-4 text-black font-bold py-2 px-2 rounded inline-flex items-center hover:bg-honeydue-shade">
+                        <button onClick={GoogleLogin} className="bg-white border-2 text-black font-bold py-2 px-2 rounded inline-flex items-center hover:bg-honeydue-shade">
                                 <IconContext.Provider value={{ size: "30px"}}>
                                     <FcGoogle/>
                                 </IconContext.Provider>
                                 <span className="ml-2 px-5">Google</span>
                         </button>
                     </div>
-                    <div className="flex justify-start w-full mt-5">
-                        <p className="text-sm font-bold">Don't have an account yet?</p>
+                    <div className="flex justify-center w-full mt-5">
+                        <p className="text-sm font-medium">Don't have an account yet?</p>
                         <Link to="/signup" className="text-sm font-bold ml-1 underline">Sign Up!</Link>
                     </div>
                 </form>

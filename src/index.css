@@ -6,6 +6,7 @@
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
 }
 
 .link{
@@ -43,17 +44,13 @@
   margin-top: 10px;
   margin-bottom: 10px;
   border-radius: 16px;
-  background: #e8e8e8;
-  box-shadow: 20px 20px 60px #c5c5c5,
-     -20px -20px 60px #ffffff;
+  background: #e8e8e8db;
   transition: 0.3s;
  }
  
 .input1:focus {
-  outline-color: #e8e8e8;
-  background: #e8e8e8;
-  box-shadow: inset 20px 20px 60px #c5c5c5,
-     inset -20px -20px 60px #ffffff;
+  outline-color: #e8e8e853;
+  background: #e8e8e849;
   transition: 0.3s;
  }
 
@@ -164,7 +161,6 @@
   align-items: center;
   border-radius: 5px;
   background: #183153;
-  font-family: "Montserrat", sans-serif;
   box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 }
