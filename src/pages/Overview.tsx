@@ -14,6 +14,14 @@ function Overview(){
     const auth = getAuth(fireApp);
     const userId = auth.currentUser?.uid;
 
+    const [team1, setTeam1] = useState("team");
+    const [team2, setTeam2] = useState("team");
+    const [team1_score, setTeam1_Score] = useState("20");
+    const [team2_score, setTeam2_Score] = useState("53");
+    const [team1_logo, setTeam1_Logo] = useState("https://upload.wikimedia.org/wikipedia/fr/0/0e/San_Antonio_Spurs_2018.png");
+    const [team2_logo, setTeam2_Logo] = useState("https://upload.wikimedia.org/wikipedia/fr/0/0e/San_Antonio_Spurs_2018.png");
+    const [period, setPeriod] = useState("4th Quarter")
+
     const [easternTeams, setEasternTeams] = useState([]);
     const [westernTeams, setWesternTeams] = useState([]);
     const [eloading, setEloading] = useState(true);
@@ -25,7 +33,7 @@ function Overview(){
             url: 'https://api-nba-v1.p.rapidapi.com/games',
             params: {live: 'all'},
             headers: {
-                'X-RapidAPI-Key': 'f25a3c0601msh66d2f137054c227p1a9429jsn9b16330dc6c6',
+                'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
                 'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com'
             }
         };
@@ -33,6 +41,7 @@ function Overview(){
         try {
             const response = await axios.request(options);
             console.log(response.data);
+
         } catch (error) {
             console.error(error);
         }
@@ -112,13 +121,14 @@ function Overview(){
         }
     }
 
-    function SendUsertoPredictionsPanel(leagueClicked: any){ 
-        navigate(`/make-bracket-predictions/${leagueClicked}/${userId}`);
+    function SendUsertoPredictionsPanel(){ 
+        navigate("/make-bracket-predictions");
     }
     
     useEffect(() => {
-        fetchEasternStandings();
-        fetchWesternStandings();
+        // fetchEasternStandings();
+        // fetchWesternStandings();
+        // fetchLiveMatch();
     },[])
     
     return(
@@ -126,20 +136,33 @@ function Overview(){
             <Dashbar/>
 
             <div id="dashboard" className="w-3/4 h-full flex flex-col justify-between bg-white p-8 overflow-auto">
-                <h1 className="text-4xl font-bold">Dashboard</h1>
+                <h1 className="text-4xl font-bold mb-5">Dashboard</h1>
 
-                <div className="flex justify-evenly space-x-8">
+                <div className="flex justify-evenly space-x-8" onClick={SendUsertoPredictionsPanel}>
                     <div className="playoffs-btn flex flex-col justify-center items-center w-100 h-64 text-lg text-black bg-white border-black rounded-lg ml-3 border-2 shadow-2xl hover:shadow-sm">
                         <p>{`NBA Playoffs ${currentYear} Bracket Predictions`}</p>
                     </div>
 
-                    <div className="flex flex-col justify-center items-center w-full h-64 text-lg text-black bg-white border-black rounded-lg mr-3 border-2 shadow-2xl hover:shadow-sm">
-                        <div className="flex flex-row justify-center items-center space-x-2">
+                    <div className="flex flex-col justify-center items-center w-full h-64 text-lg text-black bg-glucose border-black rounded-lg mr-3 border-2 shadow-2xl hover:shadow-sm">
+                        <div className="flex flex-row justify-center items-center space-x-2 mb-4 bg-glucose">
                             <IconContext.Provider value={{ color: "red", size: "40px"}}>
                                 <MdLiveTv/>
                             </IconContext.Provider>
-                            <p>Live Game</p>
+                            <p className="font-semibold text-2xl">LIVE GAME</p>
                         </div>
+                        <div className="flex flex-row justify-center space-x-8 w-full bg-glucose">
+                            <div className="flex flex-col items-center">
+                                <img className="h-24 w-full mb-2" src={team1_logo} alt="team 1 logo"/>
+                                <span className="font-semibold text-xl">{team1}</span>
+                                <span className="text-xl">{team1_score}</span>
+                            </div>
+                            <div className="flex flex-col items-center">
+                                <img className="h-24 w-full mb-2" src={team2_logo} alt="team 1 logo"/>
+                                <span className="font-semibold text-xl">{team2}</span>
+                                <span className="text-xl">{team2_score}</span>
+                            </div>
+                        </div>
+                        <span className="text-xl">{period}</span>
                     </div>
                 </div>
 
