@@ -24,7 +24,7 @@ module.exports = {
         'final': '208px',
         'h2': '500px',
         'login-h': '500px',
-        '100': '450px'
+        '100': '550px'
       },
       borderRadius: {
         'home': '100px'

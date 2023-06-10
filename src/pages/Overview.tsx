@@ -1,11 +1,11 @@
-import { ref, set } from "firebase/database";
-import { database, fireApp } from "../App";
+import { fireApp } from "../App";
 import { getAuth } from "firebase/auth";
-import Playoffs from "../assets/pngaaa.com-405120.png"
 import axios from "axios";
-import cheerio from "cheerio";
 import { useNavigate } from "react-router-dom";
 import Dashbar from "../components/Dashbar";
+import { useEffect, useState } from "react";
+import { MdLiveTv } from "react-icons/md";
+import { IconContext } from "react-icons";
 
 function Overview(){
     const navigate = useNavigate();
@@ -14,205 +14,172 @@ function Overview(){
     const auth = getAuth(fireApp);
     const userId = auth.currentUser?.uid;
 
-    function retrieveLeagueData(league: string){
-        const espnUrl = 'http://www.espn.com/nba/bracket';
-        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-        const newUrl = proxyUrl + espnUrl;
-        axios.get(newUrl).then(response => {
-            let teams: Array<string> = [];
-            const html = response.data;
-            const $ = cheerio.load(html);
+    const [easternTeams, setEasternTeams] = useState([]);
+    const [westernTeams, setWesternTeams] = useState([]);
+    const [eloading, setEloading] = useState(true);
+    const [wloading, setlWoading] = useState(true);
 
-            //first round
-            const firstRound = $(".c1");
-            firstRound.each((_: any, dl: any) => {
-                $(dl).find("dt").each((_: any , dt: any) => {
-                    let text = $(dt).text().trim();
-                    const textArr = text.split("(");
-                    const team1_text = textArr[1].split(")");
-                    const team2_text = textArr[2].split(")");
-                    const team1 = team1_text[1].substring(1);
-                    const team2 = team2_text[1].substring(1);
-                    teams.push(team1);
-                    teams.push(team2);
-                })
-            })
-            let counter: number = 0;
-            for (let i: number = 1; i <= 8; i++){
-                set(ref(database, `users/${userId}/predictions/${league}/r1/match_${i}`),{
-                    team_1: teams[counter],
-                    team_2: teams[counter+1],
-                })
-                counter+=2;
-            }
-
-            //second round
-            teams = [];
-            const secondRound = $(".c2");
-            secondRound.each((_: any, dl: any) => {
-                $(dl).find("dt").each((_: any , dt: any) => {
-                    let numOfTeams = $(dt).find("a");
-                    if (numOfTeams.length === 1){
-                        let text = $(numOfTeams).text().trim();
-                        teams.push(text);
-                        teams.push("TBA");
-                    }
-                    else if (numOfTeams.length === 0){
-                        teams.push("TBA", "TBA");
-                    }
-                    else{
-                        $(dt).find("a").each((_: any, a: any) => {
-                            let text = $(a).text().trim();
-                            teams.push(text);
-                        })
-                    }
-                })
-            })
-            counter = 0;
-            for (let i: number = 1; i <= 4; i++){
-                set(ref(database, `users/${userId}/predictions/${league}/r2/match_${i}`),{
-                    team_1: teams[counter],
-                    team_2: teams[counter+1],
-                })
-                counter+=2;
-            }
-
-
-            //third round
-            teams = [];
-            const thirdRound = $(".c3");
-            thirdRound.each((_: any, dl: any) => {
-                $(dl).find("dt").each((_: any , dt: any) => {
-                    let numOfTeams = $(dt).find("a");
-                    if (numOfTeams.length === 1){
-                        let text = $(numOfTeams).text().trim();
-                        teams.push(text);
-                        teams.push("TBA");
-                    }
-                    else if (numOfTeams.length === 0){
-                        teams.push("TBA", "TBA");
-                    }
-                    else{
-                        $(dt).find("a").each((_: any, a: any) => {
-                            let text = $(a).text().trim();
-                            teams.push(text);
-                        })
-                    }
-                })
-            })
-            counter = 0;
-            for (let i: number = 1; i <= 2; i++){
-                set(ref(database, `users/${userId}/predictions/${league}/r3/match_${i}`),{
-                    team_1: teams[counter],
-                    team_2: teams[counter+1],
-                })
-                counter+=2;
-            }
-
-            
-            //final round
-            teams = [];
-            const finalRound = $(".c4");
-            finalRound.each((_: any, dl: any) => {
-                $(dl).find("dt").each((_: any , dt: any) => {
-                    let numOfTeams = $(dt).find("a");
-                    if (numOfTeams.length === 1){
-                        let text = $(numOfTeams).text().trim();
-                        teams.push(text);
-                        teams.push("TBA");
-                    }
-                    else if (numOfTeams.length === 0){
-                        teams.push("TBA", "TBA");
-                    }
-                    else{
-                        $(dt).find("a").each((_: any, a: any) => {
-                            let text = $(a).text().trim();
-                            teams.push(text);
-                        })
-                    }
-                })
-            })
-            counter = 0;
-            for (let i: number = 1; i <= 1; i++){
-                set(ref(database, `users/${userId}/predictions/${league}/r4/match_${i}`),{
-                    team_1: teams[counter],
-                    team_2: teams[counter+1],
-                })
-                counter+=2;
-            }
-        })
-    }
-    
-    async function fetchStandings(){
+    async function fetchLiveMatch(){
         const options = {
-        method: 'GET',
-        url: 'https://api-nba-v1.p.rapidapi.com/standings',
-        params: {
-            league: 'standard',
-            season: '2022',
-            conference: 'east'
-        },
-        headers: {
-            'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
-            'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com'
-        }
+            method: 'GET',
+            url: 'https://api-nba-v1.p.rapidapi.com/games',
+            params: {live: 'all'},
+            headers: {
+                'X-RapidAPI-Key': 'f25a3c0601msh66d2f137054c227p1a9429jsn9b16330dc6c6',
+                'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com'
+            }
         };
-
+          
         try {
             const response = await axios.request(options);
             console.log(response.data);
-            sortTeams(response.data);
         } catch (error) {
             console.error(error);
         }
     }
 
-    function sortTeams(data: any){
-        let easternConference = data.map
+    async function fetchEasternStandings(){
+        function sortEasternTeams(data: any){
+            let tempTeams: any = [];
+            for (let i=0; i<14; i++){
+                const team = {
+                    name: data[i].team.name,
+                    wins: data[i].conference.win,
+                    loss: data[i].conference.loss,
+                    rank: data[i].conference.rank
+                }
+                tempTeams[data[i].conference.rank] = team;
+            }
+            setEasternTeams(tempTeams)
+            setEloading(false);
+        }
+        const options = {
+            method: 'GET',
+            url: 'https://api-nba-v1.p.rapidapi.com/standings',
+            params: {
+                league: 'standard',
+                season: '2022',
+                conference: 'east'
+            },
+            headers: {
+                'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
+                'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com'
+            }
+        };
+
+        try {
+            const response = await axios.request(options);
+            sortEasternTeams(response.data.response);
+        } catch (error) {
+            console.error(error);
+        }
     }
 
-    fetchStandings();
+    async function fetchWesternStandings(){
+        function sortWesternTeams(data: any){
+            let tempTeams: any = [];
+            for (let i=0; i<14; i++){
+                const team = {
+                    name: data[i].team.name,
+                    wins: data[i].conference.win,
+                    loss: data[i].conference.loss,
+                    rank: data[i].conference.rank
+                }
+                tempTeams[data[i].conference.rank] = team;
+            }
+            setWesternTeams(tempTeams)
+            setlWoading(false);
+        }
+        const options = {
+            method: 'GET',
+            url: 'https://api-nba-v1.p.rapidapi.com/standings',
+            params: {
+                league: 'standard',
+                season: '2022',
+                conference: 'west'
+            },
+            headers: {
+                'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
+                'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com'
+            }
+        };
+
+        try {
+            const response = await axios.request(options);
+            sortWesternTeams(response.data.response);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     function SendUsertoPredictionsPanel(leagueClicked: any){ 
         navigate(`/make-bracket-predictions/${leagueClicked}/${userId}`);
     }
-
+    
+    useEffect(() => {
+        fetchEasternStandings();
+        fetchWesternStandings();
+    },[])
+    
     return(
         <div className="flex h-screen bg-gray-100">
             <Dashbar/>
 
             <div id="dashboard" className="w-3/4 h-full flex flex-col justify-between bg-white p-8 overflow-auto">
                 <h1 className="text-4xl font-bold">Dashboard</h1>
-                <div className="flex justify-between">
-                    <div className="playoffs-btn flex flex-col justify-center items-center w-96 h-64 text-lg text-black bg-white border-black rounded-lg ml-3 border-2 shadow-2xl hover:shadow-sm">
+
+                <div className="flex justify-evenly space-x-8">
+                    <div className="playoffs-btn flex flex-col justify-center items-center w-100 h-64 text-lg text-black bg-white border-black rounded-lg ml-3 border-2 shadow-2xl hover:shadow-sm">
                         <p>{`NBA Playoffs ${currentYear} Bracket Predictions`}</p>
                     </div>
 
-                    <div className="flex flex-col justify-center items-center w-100 h-64 text-lg text-black bg-white border-black rounded-lg mr-3 border-2 shadow-2xl hover:shadow-sm">
-                        <p>Live Game</p>
-                        {/* Live game details go here */}
+                    <div className="flex flex-col justify-center items-center w-full h-64 text-lg text-black bg-white border-black rounded-lg mr-3 border-2 shadow-2xl hover:shadow-sm">
+                        <div className="flex flex-row justify-center items-center space-x-2">
+                            <IconContext.Provider value={{ color: "red", size: "40px"}}>
+                                <MdLiveTv/>
+                            </IconContext.Provider>
+                            <p>Live Game</p>
+                        </div>
                     </div>
                 </div>
+
                 <div className="flex justify-evenly">
-                    <div className="flex flex-col justify-center items-center w-full h-60 text-lg text-black bg-white border-black rounded-lg m-3 border-2 shadow-2xl hover:shadow-sm overflow-auto">
-                        <p className="font-bold text-xl mb-4">Western Conference Leaderboard</p>
-                        {/* {data.map((item, index) => (
-                            <div key={index} className="flex justify-between w-full px-4 py-2">
-                                <span className="text-left">{item.teamName}</span>
-                                <span className="text-right">{item.score}</span>
-                            </div>
-                        ))} */}
+                    <div className="flex flex-col justify-center items-center w-full h-80 bg-white border-black rounded-lg m-3 border-2 shadow-2xl hover:shadow-sm">
+                        <div className="h-full w-full overflow-y-scroll">
+                            <div className="w-full flex justify-center"><span className="text-bold text-xl m-2">WESTERN STANDINGS</span></div>
+                            { !wloading ?
+                                (westernTeams.map((team: any) => {
+                                    return (
+                                        <div key={team.rank} className="flex justify-between items-center p-2">
+                                            <span className="text-sm font-bold">{team.rank}. {team.name}</span>
+                                            <div className="flex space-x-4">
+                                                <span className="text-sm">Wins: {team.wins}</span>
+                                                <span className="text-sm">Loss: {team.loss}</span>
+                                            </div>
+                                        </div>
+                                    )
+                                })) : (<p className="text-xl mb-4">Loading...</p>)
+                            }
+                        </div>
                     </div>
 
-
-                    <div className="flex flex-col justify-center items-center w-full h-60 text-lg text-black bg-white border-black rounded-lg m-3 border-2 shadow-2xl hover:shadow-sm overflow-auto">
-                        <p className="font-bold text-xl mb-4">Eastern Conference Leaderboard</p>
-                        {/* {data.map((item, index) => (
-                            <div key={index} className="flex justify-between w-full px-4 py-2">
-                                <span className="text-left">{item.teamName}</span>
-                                <span className="text-right">{item.score}</span>
-                            </div>
-                        ))} */}
+                    <div className="flex flex-col justify-center items-center w-full h-80 bg-white border-black rounded-lg m-3 border-2 shadow-2xl hover:shadow-sm">
+                        <div className="h-full w-full overflow-y-scroll">
+                            <div className="w-full flex justify-center"><span className="text-bold text-xl m-2">EASTERN STANDINGS</span></div>
+                            { !eloading ?
+                                (easternTeams.map((team: any) => {
+                                    return (
+                                        <div key={team.rank} className="flex justify-between items-center p-2">
+                                            <span className="text-sm font-bold">{team.rank}. {team.name}</span>
+                                            <div className="flex space-x-4">
+                                                <span className="text-sm">Wins: {team.wins}</span>
+                                                <span className="text-sm">Loss: {team.loss}</span>
+                                            </div>
+                                        </div>
+                                    )
+                                })) : (<p className="text-xl mb-4">Loading...</p>)
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
