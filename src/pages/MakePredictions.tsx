@@ -4,6 +4,9 @@ import { child, get, ref, set } from "firebase/database";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import cheerio from "cheerio";
+import R1_Match from "../components/R1_Match";
+import R2_Match from "../components/R2_Match";
+import R3_Match from "../components/R3_Match";
 
 function MakePredictions(){
     const {league, userId} = useParams();
@@ -249,166 +252,42 @@ function MakePredictions(){
 
             <div className="flex flex-row">
                 <div className="h-full w-64">
-                    <div className="box mt-2.5">
-                        <div className="flex flex-row">
-                            <p>Prediction: </p>
-                            <select>
-                                <option value="none">None</option>
-                                <option value="none">{teams[0]}</option>
-                                <option value="none">{teams[1]}</option>
-                            </select>
-                        </div>
-                        <p>{teams[0]} vs. {teams[1]}</p>
-                    </div>
-                    <div className="box  mt-2.5">
-                        <div className="flex flex-row">
-                            <p>Prediction: </p>
-                            <select>
-                                <option value="none">None</option>
-                                <option value="none">{teams[2]}</option>
-                                <option value="none">{teams[3]}</option>
-                            </select>
-                        </div>
-                        <p>{teams[2]} vs. {teams[3]}</p>
-                    </div>
-                    <div className="box mt-2.5">
-                        <div className="flex flex-row">
-                            <p>Prediction: </p>
-                            <select>
-                                <option value="none">None</option>
-                                <option value="none">{teams[4]}</option>
-                                <option value="none">{teams[5]}</option>
-                            </select>
-                        </div>
-                        <p>{teams[4]} vs. {teams[5]}</p>
-                    </div>
-                    <div className="box mt-2.5">
-                        <div className="flex flex-row">
-                            <p>Prediction: </p>
-                            <select>
-                                <option value="none">None</option>
-                                <option value="none">{teams[6]}</option>
-                                <option value="none">{teams[7]}</option>
-                            </select>
-                        </div>
-                        <p>{teams[6]} vs. {teams[7]}</p>
-                    </div>
+                    <R1_Match team_1={teams[0]} team_2={teams[1]}/>
+                    
+                    <R1_Match team_1={teams[0]} team_2={teams[1]}/>
 
-                    <div className="box mt-2.5">
-                        <div className="flex flex-row">
-                            <p>Prediction: </p>
-                            <select>
-                                <option value="none">None</option>
-                                <option value="none">{teams[8]}</option>
-                                <option value="none">{teams[9]}</option>
-                            </select>
-                        </div>
-                        <p>{teams[8]} vs. {teams[9]}</p>
-                    </div>
-                    <div className="box mt-2.5">
-                        <div className="flex flex-row">
-                            <p>Prediction: </p>
-                            <select>
-                                <option value="none">None</option>
-                                <option value="none">{teams[10]}</option>
-                                <option value="none">{teams[11]}</option>
-                            </select>
-                        </div>
-                        <p>{teams[10]} vs. {teams[11]}</p>
-                    </div>
-                    <div className="box mt-2.5">
-                        <div className="flex flex-row">
-                            <p>Prediction: </p>
-                            <select>
-                                <option value="none">None</option>
-                                <option value="none">{teams[12]}</option>
-                                <option value="none">{teams[13]}</option>
-                            </select>
-                        </div>
-                        <p>{teams[12]} vs. {teams[13]}</p>
-                    </div>
-                    <div className="box mt-2.5">
-                        <div className="flex flex-row">
-                            <p>Prediction: </p>
-                            <select>
-                                <option value="none">None</option>
-                                <option value="none">{teams[14]}</option>
-                                <option value="none">{teams[15]}</option>
-                            </select>
-                        </div>
-                        <p>{teams[14]} vs. {teams[15]}</p>
-                    </div>
+                    <R1_Match team_1={teams[0]} team_2={teams[1]}/>
+                    
+                    <R1_Match team_1={teams[0]} team_2={teams[1]}/>
+
+                    <R1_Match team_1={teams[0]} team_2={teams[1]}/>
+
+                    <R1_Match team_1={teams[0]} team_2={teams[1]}/>
+                    
+                    <R1_Match team_1={teams[0]} team_2={teams[1]}/>
+                    
+                    <R1_Match team_1={teams[0]} team_2={teams[1]}/>
                 </div>
+
+
                 <div className="h-full w-52 ml-4">
-                    <div className="box box-semi mt-13 mb-13 flex flex-col">
-                        <div className="flex flex-row">
-                            <p>Prediction: </p>
-                            <select>
-                                <option value="none">None</option>
-                                <option value="none">None</option>
-                                <option value="none">None</option>
-                            </select>
-                        </div>
-                        <p>{semiTeams[0]} vs. {semiTeams[1]}</p>
-                    </div>
-                    <div className="box box-semi mt-26 mb-13 flex flex-col">
-                        <div className="flex flex-row">
-                            <p>Prediction: </p>
-                            <select>
-                                <option value="none">None</option>
-                                <option value="none">None</option>
-                                <option value="none">None</option>
-                            </select>
-                        </div>
-                        <p>{semiTeams[2]} vs. {semiTeams[3]}</p>
-                    </div>
-                    <div className="box box-semi mt-26 mb-13 flex flex-col">
-                        <div className="flex flex-row">
-                            <p>Prediction: </p>
-                            <select>
-                                <option value="none">None</option>
-                                <option value="none">None</option>
-                                <option value="none">None</option>
-                            </select>
-                        </div>
-                        <p>{semiTeams[4]} vs. {semiTeams[5]}</p>
-                    </div>
-                    <div className="box box-semi mt-26 mb-13 flex flex-col">
-                        <div className="flex flex-row">
-                            <p>Prediction: </p>
-                            <select>
-                                <option value="none">None</option>
-                                <option value="none">None</option>
-                                <option value="none">None</option>
-                            </select>
-                        </div>
-                        <p>{semiTeams[6]} vs. {semiTeams[7]}</p>
-                    </div>
+                    <R2_Match team_1={teams[0]} team_2={teams[1]} top_margin="mt-13"/>
+
+                    <R2_Match team_1={teams[0]} team_2={teams[1]} top_margin="mt-26"/>
+
+                    <R2_Match team_1={teams[0]} team_2={teams[1]} top_margin="mt-26"/>
+
+                    <R2_Match team_1={teams[0]} team_2={teams[1]} top_margin="mt-26"/>
                 </div>
+
+                
                 <div className="h-full w-52 ml-4">
-                    <div className="box box-semi mt-37 mb-37 flex flex-col">
-                        <div className="flex flex-row">
-                            <p>Prediction: </p>
-                            <select>
-                                <option value="none">None</option>
-                                <option value="none">None</option>
-                                <option value="none">None</option>
-                            </select>
-                        </div>
-                        <p>{confTeams[0]} vs. {confTeams[1]}</p>
-                    </div>
-                    <div className="box box-semi mt-70 flex flex-col">
-                        <div className="flex flex-row">
-                            <p>Prediction: </p>
-                            <select>
-                                <option value="none">None</option>
-                                <option value="none">None</option>
-                                <option value="none">None</option>
-                            </select>
-                        </div>
-                        <p>{confTeams[2]} vs. {confTeams[3]}</p>
-                    </div>
+                    <R3_Match team_1={teams[0]} team_2={teams[1]} top_margin="mt-37" bot_margin="mt-37"/>
+
+                    <R3_Match team_1={teams[0]} team_2={teams[1]} top_margin="mt-70" bot_margin=""/>
                 </div>
+
+
                 <div className="h-full w-52 ml-4">
                     <div className="box box-final mt-final flex flex-col">
                         <div className="flex flex-row">
