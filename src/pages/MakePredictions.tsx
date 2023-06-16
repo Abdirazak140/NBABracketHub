@@ -251,55 +251,63 @@ function MakePredictions(){
             </div>
 
             <div className="flex flex-row">
+
+                <div className="flex flex-col">
+                    <div className="border-black h-full w-24 border-2 mt-2.5 flex flex-col">
+                        <p className="transform rotate-90">Eastern Conference</p>
+                    </div>
+                    <div className="border-black h-full w-24 border-2 my-2.5 flex flex-col">Western Conference</div>
+                </div>
+
                 <div className="h-full w-64">
-                    <R1_Match team_1={teams[0]} team_2={teams[1]}/>
+                    <R1_Match team_1={teams[0]} team_2={teams[1]} score_1="" score_2=""/>
                     
-                    <R1_Match team_1={teams[0]} team_2={teams[1]}/>
+                    <R1_Match team_1={teams[2]} team_2={teams[3]} score_1="" score_2=""/>
 
-                    <R1_Match team_1={teams[0]} team_2={teams[1]}/>
+                    <R1_Match team_1={teams[4]} team_2={teams[5]} score_1="" score_2=""/>
                     
-                    <R1_Match team_1={teams[0]} team_2={teams[1]}/>
+                    <R1_Match team_1={teams[0]} team_2={teams[1]} score_1="" score_2=""/>
 
-                    <R1_Match team_1={teams[0]} team_2={teams[1]}/>
+                    <R1_Match team_1={teams[0]} team_2={teams[1]} score_1="" score_2=""/>
 
-                    <R1_Match team_1={teams[0]} team_2={teams[1]}/>
+                    <R1_Match team_1={teams[0]} team_2={teams[1]} score_1="" score_2=""/>
                     
-                    <R1_Match team_1={teams[0]} team_2={teams[1]}/>
+                    <R1_Match team_1={teams[0]} team_2={teams[1]} score_1="" score_2=""/>
                     
-                    <R1_Match team_1={teams[0]} team_2={teams[1]}/>
+                    <R1_Match team_1={teams[0]} team_2={teams[1]} score_1="" score_2=""/>
                 </div>
 
 
-                <div className="h-full w-52 ml-4">
-                    <R2_Match team_1={teams[0]} team_2={teams[1]} top_margin="mt-13"/>
+                <div className="h-full w-52">
+                    <R2_Match team_1={teams[0]} team_2={teams[1]} top_margin="mt-13" score_1="" score_2=""/>
 
-                    <R2_Match team_1={teams[0]} team_2={teams[1]} top_margin="mt-26"/>
+                    <R2_Match team_1={teams[0]} team_2={teams[1]} top_margin="mt-26" score_1="" score_2=""/>
 
-                    <R2_Match team_1={teams[0]} team_2={teams[1]} top_margin="mt-26"/>
+                    <R2_Match team_1={teams[0]} team_2={teams[1]} top_margin="mt-26" score_1="" score_2=""/>
 
-                    <R2_Match team_1={teams[0]} team_2={teams[1]} top_margin="mt-26"/>
+                    <R2_Match team_1={teams[0]} team_2={teams[1]} top_margin="mt-26" score_1="" score_2=""/>
                 </div>
 
                 
-                <div className="h-full w-52 ml-4">
-                    <R3_Match team_1={teams[0]} team_2={teams[1]} top_margin="mt-37" bot_margin="mt-37"/>
+                <div className="h-full w-52">
+                    <R3_Match team_1={teams[0]} team_2={teams[1]} top_margin="mt-37" bot_margin="mt-37" score_1="" score_2=""/>
 
-                    <R3_Match team_1={teams[0]} team_2={teams[1]} top_margin="mt-70" bot_margin=""/>
+                    <R3_Match team_1={teams[0]} team_2={teams[1]} top_margin="mt-70" bot_margin="" score_1="" score_2=""/>
                 </div>
 
 
-                <div className="h-full w-52 ml-4">
-                    <div className="box box-final mt-final flex flex-col">
-                        <div className="flex flex-row">
-                            <p>Prediction: </p>
-                            <select>
-                                <option value="none">None</option>
-                                <option value="none">None</option>
-                                <option value="none">None</option>
-                            </select>
+                <div className="h-full w-52">
+                        <div className="box box-final mt-final flex flex-col">
+                            <div className="flex flex-row">
+                                <p>Prediction: </p>
+                                <select>
+                                    <option value="none">None</option>
+                                    <option value="none">None</option>
+                                    <option value="none">None</option>
+                                </select>
+                            </div>
+                            <p>{finalTeams[0]} vs. {finalTeams[1]}</p>
                         </div>
-                        <p>{finalTeams[0]} vs. {finalTeams[1]}</p>
-                    </div>
                 </div>
             </div>
         </div>
