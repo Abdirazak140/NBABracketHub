@@ -25,7 +25,7 @@ function Dashbar(){
 
             <div className="flex flex-col items-start space-y-4 py-4 px-8 w-full pb-8">
                 <Link onClick={() =>{setOverviewStyle(true); setSettingsStyle(false);}} to="/dashboard/Overview" className={`text-lg font-medium ${overviewStyle ? "text-honeydue" : "text-gray-300"} hover:text-honeydue`}>Overview</Link>
-                <Link onClick={() =>{setSettingsStyle(true); setOverviewStyle(false); }} to="/account-info" className={`text-lg font-medium ${settingsStyle ? "text-honeydue" : "text-gray-300"} hover:text-honeydue`}>Settings</Link>
+                <Link onClick={() =>{setSettingsStyle(true); setOverviewStyle(false); }} to="/dashboard/Settings" className={`text-lg font-medium ${settingsStyle ? "text-honeydue" : "text-gray-300"} hover:text-honeydue`}>Settings</Link>
             </div>
                 
             <div className="flex flex-col items-start space-y-4 py-4 px-8 w-full pb-8">
