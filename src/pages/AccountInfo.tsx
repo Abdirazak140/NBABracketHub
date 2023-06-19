@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
-import { getAuth } from "firebase/auth";
+import { getAuth, sendPasswordResetEmail  } from "firebase/auth";
 import { ref, child, get} from "firebase/database";
 import { fireApp, database } from "../App";
 import { useEffect, useState } from "react";
+import Dashbar from "../components/Dashbar";
 
 function AccountInfo(){
     const [name, setName] = useState("Loading...");
@@ -23,18 +23,28 @@ function AccountInfo(){
     },[name, email, reference, userId])
     
     return(
-        <div className="flex justify-center items-center w-full h-screen bg-slate-600">
-            <div className="flex flex-col border-2 border-grey-500 w-96 bg-black shadow-lg rounded-lg p-6 h-80">
-                <h1 className="font-bold text-xl mb-4 text-white">Account Information:</h1>
-                <div className="flex flex-row mt-4">
-                    <p className="font-bold text-base text-white">Name:</p>
-                    <p className="font-normal text-base text-white ml-3">{name}</p>
+        <div className="flex flex-row w-full h-screen bg-white">
+            <Dashbar/>
+            <div className="w-3/4 h-full flex flex-col justify-between bg-white p-8 overflow-auto">
+                <h1 className="text-4xl font-bold mb-5">Settings</h1>
+                <div className="w-full h-full flex flex-col bg-white p-8 overflow-auto border-grey-400 border-2 rounded-md">
+                    <h1 className="text-2xl font-bold ">Profile:</h1>
+                    <div className="flex flex-row mt-4">
+                        <div className="flex flex-col justify-center">
+                            <p className="font-bold text-base text-gray-500">Name</p>
+                            <p className="font-normal text-base text-black ml-3">{name}</p>
+                        </div>
+                        <button className="ml-20 w-20 mt-4 flex flex-row text-white justify-center items-center bg-gray-500 hover:bg-gray-700 text-white font-bold rounded">Edit</button>
+                    </div>
+                    <div className="flex flex-row mt-4">
+                        <div className="flex flex-col justify-center">
+                            <p className="font-bold text-base text-gray-500">Email</p>
+                            <p className="font-normal text-base text-black ml-3">{email}</p>
+                        </div>
+                        <button className="ml-3 w-20 mt-4 flex flex-row text-white justify-center items-center bg-gray-500 hover:bg-gray-700 text-white font-bold rounded">Edit</button>
+                    </div>
+                    <button className="w-40 mt-4 flex flex-row text-white justify-center items-center bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Reset Password</button>
                 </div>
-                <div className="flex flex-row mt-4">
-                    <p className="font-bold text-base text-white">Email:</p>
-                    <p className="font-normal text-base text-white ml-3">{email}</p>
-                </div>
-                <Link to="/dashboard/Overview" className="text-sm font-bold underline text-white mt-4 w-16">Go Back</Link>
             </div>
         </div>
     )

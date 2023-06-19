@@ -3,11 +3,14 @@ import { ReactComponent as SiteTitle } from "../assets/NBABracketHub (1).svg";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import { fireApp } from "../App";
+import { useState } from "react";
 
 function Dashbar(){
     const auth = getAuth(fireApp);
     const name = auth.currentUser?.displayName;
     const navigate = useNavigate();
+    const [overviewStyle, setOverviewStyle] = useState(true);
+    const [settingsStyle, setSettingsStyle] = useState(false);
 
     function LogOut(){
         const auth = getAuth();
@@ -21,8 +24,8 @@ function Dashbar(){
             <SiteTitle/>
 
             <div className="flex flex-col items-start space-y-4 py-4 px-8 w-full pb-8">
-                <Link to="/dashboard/Overview" className="text-lg font-medium text-honeydue hover:text-honeydue">Overview</Link>
-                <Link to="/account-info" className="text-lg font-medium text-gray-300 hover:text-honeydue">Settings</Link>
+                <Link onClick={() =>{setOverviewStyle(true); setSettingsStyle(false);}} to="/dashboard/Overview" className={`text-lg font-medium ${overviewStyle ? "text-honeydue" : "text-gray-300"} hover:text-honeydue`}>Overview</Link>
+                <Link onClick={() =>{setSettingsStyle(true); setOverviewStyle(false); }} to="/account-info" className={`text-lg font-medium ${settingsStyle ? "text-honeydue" : "text-gray-300"} hover:text-honeydue`}>Settings</Link>
             </div>
                 
             <div className="flex flex-col items-start space-y-4 py-4 px-8 w-full pb-8">
