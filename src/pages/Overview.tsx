@@ -14,6 +14,7 @@ function Overview(){
     const auth = getAuth(fireApp);
     const userId = auth.currentUser?.uid;
 
+    const [liveGame, setLiveGame] = useState(false);
     const [team1, setTeam1] = useState("team");
     const [team2, setTeam2] = useState("team");
     const [team1_score, setTeam1_Score] = useState("20");
