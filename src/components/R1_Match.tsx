@@ -5,7 +5,7 @@ interface PropTypes {
     score_2: string;
 }
 
-function R1_Match({team_1, team_2, score_1, score_2}: PropTypes){
+function R1Match({team_1, team_2, score_1, score_2}: PropTypes){
     return(
         <div className="mt-2.5 h-23 flex justify-center items-center border-y-2 border-r-2 border-black flex-row space-x-10">
             <div className="flex flex-col justify-between h-full p-2 font-thin text-sm">
@@ -21,4 +21,4 @@ function R1_Match({team_1, team_2, score_1, score_2}: PropTypes){
     )
 }
 
-export default R1_Match;
+export default R1Match;

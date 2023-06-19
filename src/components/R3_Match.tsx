@@ -7,7 +7,7 @@ interface PropTypes {
     score_2: string;
 }
 
-function R2_Match({team_1, team_2, top_margin, bot_margin, score_1, score_2}: PropTypes){
+function R3Match({team_1, team_2, top_margin, bot_margin, score_1, score_2}: PropTypes){
     return(
         <div className={`${top_margin} ${bot_margin} h-30 flex justify-center items-center border-y-2 border-r-2 border-black flex-row space-x-6`}>
             <div className="flex flex-col justify-between h-full p-2 font-thin text-sm">
@@ -23,4 +23,4 @@ function R2_Match({team_1, team_2, top_margin, bot_margin, score_1, score_2}: Pr
     )
 }
 
-export default R2_Match;
+export default R3Match;
