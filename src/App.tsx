@@ -4,7 +4,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
-import AccountInfo from "./pages/AccountInfo";
+import AccountInfo from "./pages/Settings";
 import MakePredictions from "./pages/MakePredictions";
 import Overview from "./pages/Overview";
 
@@ -32,7 +32,7 @@ function App() {
           <Route path="/dashboard/Overview" element={<Overview/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/signup" element={<Signup/>}/>
-          <Route path="/account-info" element={<AccountInfo/>}></Route>
+          <Route path="/dashboard/Settings" element={<AccountInfo/>}></Route>
           <Route path="/make-bracket-predictions" element={<MakePredictions/>}></Route>
         </Routes>
       </Router>
