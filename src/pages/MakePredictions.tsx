@@ -27,12 +27,13 @@ function MakePredictions(){
         })
     }
 
-    function RetreiveSemiFinalsData(){
+    function FetchPlayOffsTeams(){
         const espnUrl = 'http://www.espn.com/nba/bracket';
         const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
         const newUrl = proxyUrl + espnUrl;
         axios.get(newUrl).then(response => {
             let retreivedTeams: Array<string> = [];
+            let retreivedScores: Array<string> = [];
             const html = response.data;
             const $ = load(html);
             const firstRound = $(".c1");
@@ -60,7 +61,6 @@ function MakePredictions(){
                 })
             })
 
-            console.log(retreivedTeams);
             setFirstRoundTeams(retreivedTeams);
             retreivedTeams = [];
 
@@ -128,8 +128,27 @@ function MakePredictions(){
                     }
                 })
             })
+
             setFinalTeams(retreivedTeams);
             retreivedTeams = [];
+
+            //Fetching Scores
+
+            firstRound.each((_: any, dd: any) => {
+                $(dd).find("b").each((_: any , b: any) => {
+                    retreivedScores.push($(b).text().trim());
+                })
+            })
+
+            console.log(retreivedScores);
+
+            // secondRound.each((_: any, dd: any) => {
+            //     $(dd).find("b").each((_: any , b: any) => {
+            //         retreivedScores.push($(b).text().trim());
+            //     })
+            // })
+
+            // console.log(retreivedScores);
         })
     }
 
@@ -138,8 +157,8 @@ function MakePredictions(){
     }
 
     useEffect(() => {
-        RetreiveSemiFinalsData();
-    })
+        FetchPlayOffsTeams();
+    },[])
 
     return(
         <div className="flex items-center flex-col bg-honeydue">
