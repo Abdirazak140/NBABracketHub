@@ -11,6 +11,7 @@ import { getAuth } from "firebase/auth";
 import { ref, set } from "firebase/database";
 
 function MakePredictions(){
+    
     const navigate = useNavigate(); 
     const date = new Date();
     const currentYear = date.getFullYear();
@@ -20,6 +21,8 @@ function MakePredictions(){
     const [semiTeams, setSemiTeams] = useState([""])
     const [confTeams, setConfTeams] = useState([""])
     const [finalTeams, setFinalTeams] = useState([""])
+    const [retreivedScores, setRetreivedScores] = useState([""]);
+    const [makePredictions, setMakePredictions] = useState(false);
 
     function StorePredictions(match: number){
         set(ref(database, `user/${userId}/predictions/NBA Playoffs ${currentYear}/`),{
@@ -33,7 +36,8 @@ function MakePredictions(){
         const newUrl = proxyUrl + espnUrl;
         axios.get(newUrl).then(response => {
             let retreivedTeams: Array<string> = [];
-            let retreivedScores: Array<string> = [];
+            let scores: Array<string> = [];
+            
             const html = response.data;
             const $ = load(html);
             const firstRound = $(".c1");
@@ -43,21 +47,12 @@ function MakePredictions(){
 
             firstRound.each((_: any, dl: any) => {
                 $(dl).find("dt").each((_: any , dt: any) => {
-                    let numOfTeams = $(dt).find("a");
-                    if (numOfTeams.length === 1){
-                        let text = $(numOfTeams).text().trim();
-                        retreivedTeams.push(text);
-                        retreivedTeams.push("");
-                    }
-                    else if (numOfTeams.length === 0){
-                        retreivedTeams.push("", "");
-                    }
-                    else{
-                        $(dt).find("a").each((_: any, a: any) => {
-                            let text = $(a).text().trim();
+                    $(dt).find("a").each((_: any, a: any) => {
+                        let text = $(a).text().trim();
+                        if (text !== ""){
                             retreivedTeams.push(text);
-                        })
-                    } 
+                        }
+                    })
                 })
             })
 
@@ -134,21 +129,45 @@ function MakePredictions(){
 
             //Fetching Scores
 
-            firstRound.each((_: any, dd: any) => {
-                $(dd).find("b").each((_: any , b: any) => {
-                    retreivedScores.push($(b).text().trim());
+            firstRound.each((_: any, dl: any) => {
+                $(dl).find("dd").each((_: any , dd: any) => {
+                    let text1 = $(dd).find("b").text().trim()
+                    // @ts-ignore
+                    let text2 = $(dd).find("b").html().trim().match(/\d+(?=\D*$)/)[0];
+                    scores.push(text1[0], text2);  
                 })
             })
 
+            secondRound.each((_: any, dl: any) => {
+                $(dl).find("dd").each((_: any , dd: any) => {
+                    let text1 = $(dd).find("b").text().trim()
+                    // @ts-ignore
+                    let text2 = $(dd).find("b").html().trim().match(/\d+(?=\D*$)/)[0];
+                    scores.push(text1[0], text2);  
+                })
+            })
+
+            thirdRound.each((_: any, dl: any) => {
+                $(dl).find("dd").each((_: any , dd: any) => {
+                    let text1 = $(dd).find("b").text().trim()
+                    // @ts-ignore
+                    let text2 = $(dd).find("b").html().trim().match(/\d+(?=\D*$)/)[0];
+                    scores.push(text1[0], text2);  
+                })
+            })
+
+            finalRound.each((_: any, dl: any) => {
+                $(dl).find("dd").each((_: any , dd: any) => {
+                    let text1 = $(dd).find("b").text().trim()
+                    // @ts-ignore
+                    let text2 = $(dd).find("b").html().trim().match(/\d+(?=\D*$)/)[0];
+                    scores.push(text1[0], text2);  
+                })
+            })
+
+            setRetreivedScores(scores);
             console.log(retreivedScores);
 
-            // secondRound.each((_: any, dd: any) => {
-            //     $(dd).find("b").each((_: any , b: any) => {
-            //         retreivedScores.push($(b).text().trim());
-            //     })
-            // })
-
-            // console.log(retreivedScores);
         })
     }
 
@@ -168,6 +187,7 @@ function MakePredictions(){
                     <p>Save & Exit</p>
                     <ImExit/>
                 </button>
+                <div className="bg-yellow-500 w-56 h-11 text-sm p-1">NOTE: The Playoffs have already started, cant make predictions</div>
             </div>
 
             <div className="flex flex-row ml-11 text-white text-sm font-bold">
@@ -189,39 +209,39 @@ function MakePredictions(){
                 </div>
 
                 <div className="h-full w-64 relative">
-                    <R1Match team_1={firstRoundTeams[0]} team_2={firstRoundTeams[1]} score_1="" score_2=""/>
+                    <R1Match team_1={firstRoundTeams[0]} team_2={firstRoundTeams[1]} score_1={retreivedScores[0]} score_2={retreivedScores[1]}/>
                     
-                    <R1Match team_1={firstRoundTeams[2]} team_2={firstRoundTeams[3]} score_1="" score_2=""/>
+                    <R1Match team_1={firstRoundTeams[2]} team_2={firstRoundTeams[3]} score_1={retreivedScores[2]} score_2={retreivedScores[3]}/>
 
-                    <R1Match team_1={firstRoundTeams[4]} team_2={firstRoundTeams[5]} score_1="" score_2=""/>
+                    <R1Match team_1={firstRoundTeams[4]} team_2={firstRoundTeams[5]} score_1={retreivedScores[4]} score_2={retreivedScores[5]}/>
                     
-                    <R1Match team_1={firstRoundTeams[6]} team_2={firstRoundTeams[7]} score_1="" score_2=""/>
+                    <R1Match team_1={firstRoundTeams[6]} team_2={firstRoundTeams[7]} score_1={retreivedScores[6]} score_2={retreivedScores[7]}/>
 
-                    <R1Match team_1={firstRoundTeams[8]} team_2={firstRoundTeams[9]} score_1="" score_2=""/>
+                    <R1Match team_1={firstRoundTeams[8]} team_2={firstRoundTeams[9]} score_1={retreivedScores[8]} score_2={retreivedScores[9]}/>
 
-                    <R1Match team_1={firstRoundTeams[10]} team_2={firstRoundTeams[11]} score_1="" score_2=""/>
+                    <R1Match team_1={firstRoundTeams[10]} team_2={firstRoundTeams[11]} score_1={retreivedScores[10]} score_2={retreivedScores[11]}/>
                     
-                    <R1Match team_1={firstRoundTeams[12]} team_2={firstRoundTeams[13]} score_1="" score_2=""/>
+                    <R1Match team_1={firstRoundTeams[12]} team_2={firstRoundTeams[13]} score_1={retreivedScores[12]} score_2={retreivedScores[13]}/>
                     
-                    <R1Match team_1={firstRoundTeams[14]} team_2={firstRoundTeams[15]} score_1="" score_2=""/>
+                    <R1Match team_1={firstRoundTeams[14]} team_2={firstRoundTeams[15]} score_1={retreivedScores[14]} score_2={retreivedScores[15]}/>
                 </div>
 
 
                 <div className="h-full w-52">
-                    <R2Match team_1={semiTeams[0]} team_2={semiTeams[1]} top_margin="mt-13" score_1="" score_2=""/>
+                    <R2Match team_1={semiTeams[0]} team_2={semiTeams[1]} top_margin="mt-13" score_1="4" score_2="0"/>
                     
-                    <R2Match team_1={semiTeams[2]} team_2={semiTeams[3]} top_margin="mt-26" score_1="" score_2=""/>
+                    <R2Match team_1={semiTeams[2]} team_2={semiTeams[3]} top_margin="mt-26" score_1="2" score_2="4"/>
 
-                    <R2Match team_1={semiTeams[4]} team_2={semiTeams[5]} top_margin="mt-26" score_1="" score_2=""/>
+                    <R2Match team_1={semiTeams[4]} team_2={semiTeams[5]} top_margin="mt-26" score_1="4" score_2="2"/>
 
-                    <R2Match team_1={semiTeams[6]} team_2={semiTeams[7]} top_margin="mt-26" score_1="" score_2=""/>
+                    <R2Match team_1={semiTeams[6]} team_2={semiTeams[7]} top_margin="mt-26" score_1="4" score_2="2"/>
                 </div>
 
                 
                 <div className="h-full w-52">
-                    <R3Match team_1={confTeams[0]} team_2={confTeams[1]} top_margin="mt-37" bot_margin="mt-37" score_1="" score_2=""/>
+                    <R3Match team_1={confTeams[0]} team_2={confTeams[1]} top_margin="mt-37" bot_margin="mt-37" score_1="3" score_2="4"/>
 
-                    <R3Match team_1={confTeams[2]} team_2={confTeams[3]} top_margin="mt-70" bot_margin="" score_1="" score_2=""/>
+                    <R3Match team_1={confTeams[2]} team_2={confTeams[3]} top_margin="mt-70" bot_margin="" score_1="1" score_2="4"/>
                 </div>
 
 
@@ -232,9 +252,9 @@ function MakePredictions(){
                             <span>{finalTeams[1]}</span>
                         </div>
                         <div className="flex flex-col justify-evenly h-full p-2 font-bold">
-                            <span></span>
+                            <span>3</span>
                             <span className="font-medium text-sm">Games</span>
-                            <span></span>
+                            <span>4</span>
                         </div>
                     </div>
                 </div>

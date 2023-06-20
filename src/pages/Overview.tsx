@@ -166,7 +166,7 @@ function Overview(){
 
                 <div className="flex justify-evenly space-x-8" onClick={SendUsertoPredictionsPanel}>
                     <div className="playoffs-btn flex flex-col justify-center items-center w-100 h-64 text-lg text-black bg-white border-black rounded-lg ml-3 border-2 shadow-2xl hover:shadow-sm">
-                        <p>{`NBA Playoffs ${currentYear} Bracket Predictions`}</p>
+                        <p>{`Make NBA Playoffs ${currentYear} Bracket Predictions`}</p>
                     </div>
 
                     <div className="flex flex-col justify-center items-center w-full h-64 text-lg text-black bg-glucose border-black rounded-lg mr-3 border-2 shadow-2xl hover:shadow-sm">
